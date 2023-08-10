@@ -22,7 +22,7 @@ public class DepartmentController {
         return departmentService.getDepartments();
     }
 
-    @PutMapping
+    @PostMapping
     public void registerNewDepartment(@RequestBody Department department){
         departmentService.CreateNewDepartment(department);
     }
@@ -30,9 +30,5 @@ public class DepartmentController {
     public void removeDepartment(@PathVariable String department_name){
         departmentService.DeleteDepartment(department_name);
     }
-//    @PutMapping(path = "{department_name}")
-//    public void Choose_Manager(@PathVariable String department_name,
-//                               @RequestBody Long manager){
-//        departmentService.Add_Manager(department_name,manager);
-//    }
+
 }

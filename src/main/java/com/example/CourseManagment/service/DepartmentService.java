@@ -27,6 +27,9 @@ public class DepartmentService {
         return departmentRepository.findAll();
     }
     public  void CreateNewDepartment(Department department) {
+        if (departmentRepository.existsById(department.getDepartmentName())) {
+            throw new RuntimeException("Department with the same name already exists");
+        }
         departmentRepository.save(department);
     }
 
@@ -34,23 +37,5 @@ public class DepartmentService {
         departmentRepository.deleteById(departmentName);
     }
 
-//    public void Add_Manager(String departmentName, Long manager) {
-//        Optional<Department> department_previous_info = departmentRepository.findById(departmentName);
-//
-//        Optional<Professers> required_manager = professorsRepository.findById(manager);
-//
-//        Professers new_manager = required_manager.get();
-//
-//        if (department_previous_info.isPresent()) {
-//            // Student found, so you can access it using student_previous_info.get()
-//            Department department= department_previous_info.get();
-//
-//            if (department.getManager()==null) {
-//
-//                department.setManager(new_manager);
-//            }
-//            departmentRepository.save(department);
-//
-//        } else new IllegalStateException("Department does not exists.");
-//    }
+
 }

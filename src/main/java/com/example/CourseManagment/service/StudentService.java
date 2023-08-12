@@ -57,15 +57,16 @@ public class StudentService {
 
         Optional<Lessons> required_lesson = lessonsRepository.findById(lesson);
 
-        Lessons new_lesson = required_lesson.get();
+        Lessons newLesson = required_lesson.get();
+
 
         if (student_previous_info.isPresent()) {
-            // Student found, so you can access it using student_previous_info.get()
+
             Student student = student_previous_info.get();
 
             if (student.getLessons() != null) {
 
-                student.getLessons().add(new_lesson);
+                student.getLessons().add(newLesson);
             }
             studentRepository.save(student);
 
@@ -73,26 +74,24 @@ public class StudentService {
 
     }
 
-//    public void AddLessons(Long id, List<String> lessonNames) {
-//        Student student = studentRepository.findById(id)
-//                .orElseThrow(() -> new ResourceNotFoundException("Student not found with ID: " + id));
-//
-//        // Create a new list to store the updated lessons
-//        List<Lessons> updatedLessons = new ArrayList<>();
-//
-//        // Retrieve each lesson by name from the database and add it to the updatedLessons list
-//        for (String lessonName : lessonNames) {
-//            Lessons lesson = lessonsRepository.findById(lessonName)
-//                    .orElseThrow(() -> new ResourceNotFoundException("Lesson not found with name: " + lessonName));
-//            updatedLessons.add(lesson);
-//        }
-//
-//        // Set the updated lessons for the student and save the changes
-//        student.setLessons(updatedLessons);
-//        studentRepository.save(student);
-//    }
-
+@Transactional
+    public void updateNameOfStudent(Long id, String newName, String newLastname) {
+        Student student=studentRepository.findById(id).orElseThrow(()-> new IllegalStateException(
+                "student with id "+id+"does not exist"
+        ));
+        if(newName!=null &&
+                newName.length()>0 &&
+                !Objects.equals(student.getFirstname(), newName)){ //if the name provided is not the same as the current one update
+            student.setFirstname(newName);
+        }
+        if(newLastname!=null &&
+                newLastname.length()>0 &&
+                !Objects.equals(student.getLastname(), newLastname)){ //if the name provided is not the same as the current one update
+            student.setLastname(newLastname);
+        }
+        studentRepository.save(student);
     }
+}
 
 
 

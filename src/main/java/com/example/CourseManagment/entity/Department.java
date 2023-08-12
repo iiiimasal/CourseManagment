@@ -14,49 +14,49 @@ public class Department {
     @Column(nullable = false,
             unique = true)
     @Size(min = 5, max = 48)
-    private String department_name;
+    private String DepartmentName;
     //@Column(nullable = false)
     @OneToOne
-    @JoinColumn(name = "manager_id")
+    @JoinColumn(name = "MnagerId")
     private Professers manager;
     @Column()
-    @OneToMany(mappedBy="department_of_professor",
+    @OneToMany(mappedBy="departmentOfprofessor",
             fetch = FetchType.LAZY)
     private List<Professers> professersList=new ArrayList<>();
 
     @Column()
     @OneToMany(mappedBy="department")
-    private List<Student>studentList_total;
+    private List<Student>StudentListTotal;
     @Column(nullable = false)
     @OneToMany(mappedBy="department")
-    private List<Lessons>lessonsList_total;
+    private List<Lessons>LessonsListTotal;
 
-    public Department(String department_name,
+    public Department(String DepartmentName,
                       Professers manager,
                       List<Professers> professersList,
-                      List<Student> studentList_total,
-                      List<Lessons> lessonsList_total) {
-        this.department_name = department_name;
+                      List<Student> StudentListTotal,
+                      List<Lessons> LessonsListTotal) {
+        this.DepartmentName = DepartmentName;
         this.manager = manager;
         this.professersList = professersList;
-        this.studentList_total = studentList_total;
-        this.lessonsList_total = lessonsList_total;
+        this.StudentListTotal = StudentListTotal;
+        this.LessonsListTotal = LessonsListTotal;
     }
 
-    public Department(String department_name) {
-        this.department_name = department_name;
+    public Department(String DepartmentName) {
+        this.DepartmentName = DepartmentName;
     }
 
     public Department() {
 
     }
 
-    public String getDepartment_name() {
-        return department_name;
+    public String getDepartmentName() {
+        return DepartmentName;
     }
 
-    public void setDepartment_name(String department_name) {
-        this.department_name = department_name;
+    public void setDepartmentName(String DepartmentName) {
+        this.DepartmentName = DepartmentName;
     }
 
     public Professers getManager() {
@@ -75,19 +75,19 @@ public class Department {
         this.professersList = professersList;
     }
 
-    public List<Student> getStudentList_total() {
-        return studentList_total;
+    public List<Student> getStudentListTotal() {
+        return StudentListTotal;
     }
 
-    public void setStudentList_total(List<Student> studentList_total) {
-        this.studentList_total = studentList_total;
+    public void setStudentListTotal(List<Student> StudentListTotal) {
+        this.StudentListTotal = StudentListTotal;
     }
 
-    public List<Lessons> getLessonsList_total() {
-        return lessonsList_total;
+    public List<Lessons> getLessonsListTotal() {
+        return LessonsListTotal;
     }
 
-    public void setLessonsList_total(List<Lessons> lessonsList_total) {
-        this.lessonsList_total = lessonsList_total;
+    public void setLessonsListTotal(List<Lessons> LessonsListTotal) {
+        this.LessonsListTotal = LessonsListTotal;
     }
 }

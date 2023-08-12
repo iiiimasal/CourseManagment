@@ -12,37 +12,31 @@ public class Lessons {
     @Column(nullable = false,
             unique = true,
             length = 64)
-    private  String lesson_name;
+    private  String lessonName;
     @Column(nullable = false)
     private Integer Credit;
-
-
-    // Many-to-one relationship with Student
-//    @ManyToOne
-//    @JoinColumn(name = "id_Of_Student") // The name of the foreign key column in the Lessons table
-//    private Student student;
-//
-//    @Column(nullable = true)
-//    // One-to-many relationship with Student (reverse relationship)
-//    @OneToMany(mappedBy = "lessons", cascade = CascadeType.ALL)
-//    private List<Student> studentList;
 
 
     @ManyToMany(mappedBy = "lessons")
     private List<Student> students = new ArrayList<>();
     @ManyToOne
-    @JoinColumn(name = "lesson_list")
+    @JoinColumn(name = "department")
     private Department department;
-    @ManyToMany(mappedBy = "professor_lessons")
+    @ManyToMany(mappedBy = "professorLessons")
     private List<Professers> professor;
 
 
-    public Lessons(String lesson_name, Integer credit ) {
-        this.lesson_name = lesson_name;
+    public Lessons(String lessonName, Integer credit ) {
+        this.lessonName = lessonName;
         this.Credit = credit;
         //this.professor=professor;
     }
 
+    public Lessons(String lessonName, Integer credit, Department department) {
+        this.lessonName = lessonName;
+        this.Credit = credit;
+        this.department = department;
+    }
 
     public Lessons() {
 
@@ -50,12 +44,12 @@ public class Lessons {
 
 
 
-    public String getLesson_name() {
-        return lesson_name;
+    public String getlessonName() {
+        return lessonName;
     }
 
-    public void setLesson_name(String lesson_name) {
-        this.lesson_name = lesson_name;
+    public void setlessonName(String lessonName) {
+        this.lessonName = lessonName;
     }
 
     public Integer getCredit() {
@@ -66,5 +60,11 @@ public class Lessons {
         Credit = credit;
     }
 
+    public Department getDepartment() {
+        return department;
+    }
 
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
 }

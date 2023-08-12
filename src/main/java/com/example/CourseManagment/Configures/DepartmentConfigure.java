@@ -17,8 +17,10 @@ public class DepartmentConfigure {
             Department Physics=new Department(
                     "Physics"
             );
-
-            departmentRepository.saveAll(List.of(Physics));
+            Department Computer=new Department(
+                    "Computer"
+            );
+            departmentRepository.saveAll(List.of(Physics,Computer));
 
 
 

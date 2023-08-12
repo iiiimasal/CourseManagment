@@ -7,6 +7,7 @@ import com.example.CourseManagment.entity.Student;
 import com.example.CourseManagment.repository.DepartmentRepository;
 import com.example.CourseManagment.repository.LessonsRepository;
 import com.example.CourseManagment.repository.ProfessorsRepository;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,22 +49,23 @@ public class ProfessorsService {
 
         Optional<Lessons> required_lesson = lessonsRepository.findById(lesson);
 
-        Lessons new_lesson = required_lesson.get();
+        Lessons newLesson = required_lesson.get();
 
         if (professor_previous_info.isPresent()) {
-            // Student found, so you can access it using student_previous_info.get()
+
             Professers professor = professor_previous_info.get();
 
-            if (professor.getProfessor_lessons() != null) {
+            if (!(professor.getdepartmentOfprofessor()==newLesson.getDepartment())) {
+                 throw new IllegalStateException("The lesson's department and professor does not match!");
 
-                professor.getProfessor_lessons().add(new_lesson);
             }
+            professor.getprofessorLessons().add(newLesson);
             professorsRepository.save(professor);
 
         } else new IllegalStateException("Professor does not exists.");
     }
 
-    public void Add_Professor_Department(Long professorId, String departmentName) {
+    public void AddProfessorDepartment(Long professorId, String departmentName) {
 
         Optional<Professers> professor_previous_info = professorsRepository.findById(professorId);
 
@@ -75,13 +77,33 @@ public class ProfessorsService {
 
             Professers professor = professor_previous_info.get();
 
-           professor.setDepartment_of_professor(department);
+           professor.setdepartmentOfprofessor(department);
            professorsRepository.save(professor);
 
 
             } else new IllegalStateException("Professor does not exists.");
         }
+
+    public void chooseManagerOfDepartment(Long professor_id, String departmentName) {
+        Optional<Professers> professor_previous_info = professorsRepository.findById(professor_id);
+
+        Optional<Department> department_required = departmentRepository.findById(departmentName);
+        Department department = department_required.get();
+        if (professor_previous_info.isPresent()) {
+
+            Professers professor = professor_previous_info.get();
+
+            if (!professor.getdepartmentOfprofessor().equals(department)) {
+                throw new IllegalStateException("The professor mentioned is not in the required department");
+            }
+
+                department.setManager(professor);
+                departmentRepository.save(department);
+
+
+        }else new IllegalStateException("Professor does not exists.");
     }
+}
 
 
 

@@ -27,9 +27,9 @@ public class StudentController {
     }
 
     //    @PostMapping
-//    public void registerNewStudent(@RequestBody Student student, @RequestParam String department_name) {
-//        Department department = DepartmentRepository.findBydepartment_name(department_name)
-//                .orElseThrow(() -> new IllegalArgumentException("Department with name '" + department_name + "' not found."));
+//    public void registerNewStudent(@RequestBody Student student, @RequestParam String DepartmentName) {
+//        Department department = DepartmentRepository.findByDepartmentName(DepartmentName)
+//                .orElseThrow(() -> new IllegalArgumentException("Department with name '" + DepartmentName + "' not found."));
 //
 //        student.setDepartment(department); // Set the associated Department for the Student
 //        StudentService.addNewStudent(student);
@@ -45,15 +45,19 @@ public class StudentController {
 
     }
 
-    @PutMapping(path = "{id}")
+    //add lesson to the specified student by its id
+    @PostMapping(path = "{id}")
     public void updatestudent(
             @PathVariable("id") Long id,
             @RequestParam(required = false) String lesson) {
         StudentService.AddLesson(id, lesson);
     }
 
-//    @PutMapping("{id}")
-//    public void updateStudent(@PathVariable Long id, @RequestBody List<String> lessonNames) {
-//        StudentService.AddLessons(id, lessonNames);
-//    }
+    @PutMapping(path  ="{id}")
+    public void updateNameOfStudent(
+            @PathVariable("id") Long id,
+            @RequestParam() String newName,
+            @RequestParam() String newLastname){
+        StudentService.updateNameOfStudent(id,newName,newLastname);
+    }
 }

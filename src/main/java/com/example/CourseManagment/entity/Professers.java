@@ -9,15 +9,7 @@ import java.util.List;
 @Table
 public class Professers {
     @Id
-//    @SequenceGenerator(name = "professsor_sequence",
-//            sequenceName = "professsor_sequence",
-//            allocationSize = 1
-//
-//    )
-//    @GeneratedValue(
-//            strategy = GenerationType.SEQUENCE,
-//            generator = "professsor_sequence"
-//    )
+
     @Column(nullable = false,unique = true)
     private long professor_id;
     private String firstname_professor;
@@ -29,7 +21,7 @@ public class Professers {
             joinColumns = @JoinColumn(name = "professor_id"),
             inverseJoinColumns = @JoinColumn(name = "lesson_id")
     )
-    private List<Lessons> professor_lessons=new ArrayList<>();
+    private List<Lessons> professorLessons=new ArrayList<>();
 
 
 
@@ -39,7 +31,7 @@ public class Professers {
 
     @ManyToOne(fetch = FetchType.LAZY)
     //@JoinColumn(name = "professor-list", updatable = true)
-    private Department department_of_professor;
+    private Department departmentOfprofessor;
 
     public Professers(long professor_id, String firstname_professor, String lastname_professor, long nationalNum_professor) {
         this.professor_id = professor_id;
@@ -48,12 +40,12 @@ public class Professers {
         this.nationalNum_professor = nationalNum_professor;
     }
 
-    public Professers(long professor_id, String firstname_professor, String lastname_professor, long nationalNum_professor, Department department_of_professor) {
+    public Professers(long professor_id, String firstname_professor, String lastname_professor, long nationalNum_professor, Department departmentOfprofessor) {
         this.professor_id = professor_id;
         this.firstname_professor = firstname_professor;
         this.lastname_professor = lastname_professor;
         this.nationalNum_professor = nationalNum_professor;
-        this.department_of_professor = department_of_professor;
+        this.departmentOfprofessor = departmentOfprofessor;
     }
 
     public Professers() {
@@ -91,19 +83,19 @@ public class Professers {
         this.nationalNum_professor = nationalNum_professor;
     }
 
-    public List<Lessons> getProfessor_lessons() {
-        return professor_lessons;
+    public List<Lessons> getprofessorLessons() {
+        return professorLessons;
     }
 
-    public void setProfessor_lessons(List<Lessons> professor_lessons) {
-        this.professor_lessons = professor_lessons;
+    public void setprofessorLessons(List<Lessons> professorLessons) {
+        this.professorLessons = professorLessons;
     }
 
-    public Department getDepartment_of_professor() {
-        return department_of_professor;
+    public Department getdepartmentOfprofessor() {
+        return departmentOfprofessor;
     }
 
-    public void setDepartment_of_professor(Department department_of_professor) {
-        this.department_of_professor = department_of_professor;
+    public void setdepartmentOfprofessor(Department departmentOfprofessor) {
+        this.departmentOfprofessor = departmentOfprofessor;
     }
 }

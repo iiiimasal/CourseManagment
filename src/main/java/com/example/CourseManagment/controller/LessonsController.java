@@ -19,14 +19,21 @@ public class LessonsController {
     public List<Lessons> getLessons(){
          return lessonService.getLessons();
     }
-    @PutMapping
+    @PostMapping
     public void  registerNewLesson(@RequestBody Lessons lesson){
         lessonService.createNewLesson(lesson);
     }
-    @DeleteMapping(path = "{lesson_name}")
-    public void removeLesson(@PathVariable String lesson_name) {
+    @DeleteMapping(path = "{lessonName}")
+    public void removeLesson(@PathVariable String lessonName) {
 
-        lessonService.Delete_Lesson(lesson_name);
+        lessonService.DeleteLesson(lessonName);
+    }
+
+    @PostMapping(path = "{lessonName}")
+    public void addDepartment(
+            @PathVariable  ("lessonName") String  lessonName,
+            @RequestParam(required = false) String DepartmentName){
+        lessonService.AddDepartment(lessonName,DepartmentName);
     }
 
 }

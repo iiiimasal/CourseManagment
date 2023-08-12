@@ -29,14 +29,6 @@ public class Student {
     @Column(length = 128)
     private String address;
 
-    // Many-to-one relationship with Lessons
-//    @ManyToOne
-//    @JoinColumn(name = "lessons_list") // The name of the foreign key column in the Student table
-//   private Lessons lessons;
-//    @Column(nullable = false)
-//    // One-to-many relationship with Lessons
-//    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-//    private List<Lessons>Lessonslist;
     @ManyToMany
     @JoinTable(
             name = "student_lesson",
@@ -59,14 +51,14 @@ public class Student {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
-        NationalNum = nationalNum;
+        this.NationalNum = nationalNum;
         this.address = address;
     }
 
     public Student(String firstname, String lastname, long nationalNum, String address) {
         this.firstname = firstname;
         this.lastname = lastname;
-        NationalNum = nationalNum;
+        this.NationalNum = nationalNum;
         this.address = address;
     }
 

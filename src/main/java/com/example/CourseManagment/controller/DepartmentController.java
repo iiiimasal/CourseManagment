@@ -26,9 +26,9 @@ public class DepartmentController {
     public void registerNewDepartment(@RequestBody Department department){
         departmentService.CreateNewDepartment(department);
     }
-    @DeleteMapping(path = "{department_name}")
-    public void removeDepartment(@PathVariable String department_name){
-        departmentService.DeleteDepartment(department_name);
+    @DeleteMapping(path = "{DepartmentName}")
+    public void removeDepartment(@PathVariable String DepartmentName){
+        departmentService.DeleteDepartment(DepartmentName);
     }
 
 }

@@ -5,6 +5,7 @@ import com.example.CourseManagment.entity.Lessons;
 import com.example.CourseManagment.entity.Student;
 import com.example.CourseManagment.repository.DepartmentRepository;
 import com.example.CourseManagment.service.StudentService;
+import jdk.jfr.Frequency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +40,11 @@ public class StudentController {
         StudentService.addNewStudent(student);
     }
 
+    @PostMapping(path = "{id}")
+    public  void addDepartmnet(@PathVariable Long id,
+                               @RequestParam(required = false) String department){
+        StudentService.addDepartment(id , department);
+    }
     @DeleteMapping(path = "{id}")
     public void RemoveStudent(@PathVariable Long id) {
         StudentService.DeletStudent(id);
@@ -46,11 +52,13 @@ public class StudentController {
     }
 
     //add lesson to the specified student by its id
-    @PostMapping(path = "{id}")
+    @PostMapping(path = "{id}/lesson")
     public void updatestudent(
             @PathVariable("id") Long id,
-            @RequestParam(required = false) String lesson) {
-        StudentService.AddLesson(id, lesson);
+            @RequestParam(required = false) String lessonName,
+            @RequestParam(required = false) Long professor_id
+            ) {
+        StudentService.AddLesson(id, lessonName , professor_id);
     }
 
     @PutMapping(path  ="{id}")

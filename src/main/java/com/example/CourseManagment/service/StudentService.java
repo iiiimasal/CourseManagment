@@ -2,10 +2,13 @@ package com.example.CourseManagment.service;
 
 import com.example.CourseManagment.entity.Department;
 import com.example.CourseManagment.entity.Lessons;
+import com.example.CourseManagment.entity.Professers;
 import com.example.CourseManagment.entity.Student;
 //import com.example.CourseManagment.repository.StudentRepository;
 //import org.springframework.beans.factory.annotation.Autowired;
+import com.example.CourseManagment.repository.DepartmentRepository;
 import com.example.CourseManagment.repository.LessonsRepository;
+import com.example.CourseManagment.repository.ProfessorsRepository;
 import com.example.CourseManagment.repository.StudentRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -24,11 +27,17 @@ import java.util.Optional;
 public class StudentService {
     StudentRepository studentRepository;
     LessonsRepository lessonsRepository;
+    ProfessorsRepository professorsRepository;
+    DepartmentRepository departmentRepository;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository, LessonsRepository lessonsRepository) {
+    public StudentService(StudentRepository studentRepository, LessonsRepository lessonsRepository,
+                          ProfessorsRepository professorsRepository,
+                          DepartmentRepository departmentRepository) {
         this.studentRepository = studentRepository;
         this.lessonsRepository=lessonsRepository;
+        this.professorsRepository=professorsRepository;
+        this.departmentRepository=departmentRepository;
     }
 
 
@@ -51,24 +60,31 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
-    public void AddLesson(Long id, String lesson) {
+    public void AddLesson(Long id, String lesson , Long professor) {
 
         Optional<Student> student_previous_info = studentRepository.findstudentByid(id);
 
         Optional<Lessons> required_lesson = lessonsRepository.findById(lesson);
 
+        Optional<Professers>requiredProfessor=professorsRepository.findById(professor);
+
         Lessons newLesson = required_lesson.get();
+
+        Professers wantedProfessor=requiredProfessor.get();
 
 
         if (student_previous_info.isPresent()) {
 
             Student student = student_previous_info.get();
+            if(student.getDepartment()==newLesson.getDepartment()&& wantedProfessor.getprofessorLessons().contains(newLesson)) {
 
-            if (student.getLessons() != null) {
 
-                student.getLessons().add(newLesson);
+                if (student.getLessons() != null) {
+
+                    student.getLessons().add(newLesson);
+                }
+                studentRepository.save(student);
             }
-            studentRepository.save(student);
 
         } else new IllegalStateException("Student does not exists.");
 
@@ -89,6 +105,17 @@ public class StudentService {
                 !Objects.equals(student.getLastname(), newLastname)){ //if the name provided is not the same as the current one update
             student.setLastname(newLastname);
         }
+        studentRepository.save(student);
+    }
+
+    public void addDepartment(Long id, String departmentName) {
+        Student student=studentRepository.findById(id).orElseThrow(()-> new IllegalStateException(
+                "student with id "+id+"does not exist"
+        ));
+        Optional<Department> department_required = departmentRepository.findById(departmentName);
+        Department department=department_required.get();
+
+        student.setDepartment(department);
         studentRepository.save(student);
     }
 }

@@ -28,9 +28,10 @@ public class DepartmentService {
     }
     public  void CreateNewDepartment(Department department) {
         if (departmentRepository.existsById(department.getDepartmentName())) {
-            throw new RuntimeException("Department with the same name already exists");
+            throw new IllegalStateException("Department with the same name already exists");
+        } else {
+            departmentRepository.save(department);
         }
-        departmentRepository.save(department);
     }
 
     public void DeleteDepartment(String departmentName) {

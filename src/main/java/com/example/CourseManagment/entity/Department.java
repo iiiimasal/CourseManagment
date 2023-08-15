@@ -14,7 +14,7 @@ public class Department {
     @Column(nullable = false,
             unique = true)
     @Size(min = 5, max = 48)
-    private String DepartmentName;
+    private String departmentName;
     //@Column(nullable = false)
     @OneToOne
     @JoinColumn(name = "MnagerId")
@@ -36,15 +36,20 @@ public class Department {
                       List<Professers> professersList,
                       List<Student> StudentListTotal,
                       List<Lessons> LessonsListTotal) {
-        this.DepartmentName = DepartmentName;
+        this.departmentName = DepartmentName;
         this.manager = manager;
         this.professersList = professersList;
         this.StudentListTotal = StudentListTotal;
         this.LessonsListTotal = LessonsListTotal;
     }
 
+    public Department(String departmentName, Professers manager) {
+        this.departmentName = departmentName;
+        this.manager = manager;
+    }
+
     public Department(String DepartmentName) {
-        this.DepartmentName = DepartmentName;
+        this.departmentName = DepartmentName;
     }
 
     public Department() {
@@ -52,11 +57,11 @@ public class Department {
     }
 
     public String getDepartmentName() {
-        return DepartmentName;
+        return departmentName;
     }
 
     public void setDepartmentName(String DepartmentName) {
-        this.DepartmentName = DepartmentName;
+        this.departmentName = DepartmentName;
     }
 
     public Professers getManager() {

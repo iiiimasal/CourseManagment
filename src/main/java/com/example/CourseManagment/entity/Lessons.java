@@ -35,8 +35,10 @@ public class Lessons {
     public Lessons(String lessonName, Integer credit, Department department) {
         this.lessonName = lessonName;
         this.Credit = credit;
-        this.department = department;
+
     }
+
+
 
     public Lessons() {
 

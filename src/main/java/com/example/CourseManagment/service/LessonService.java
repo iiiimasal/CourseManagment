@@ -30,7 +30,9 @@ public class LessonService {
     }
 
     public void createNewLesson(Lessons lesson) {
-
+        if (lessonsRepository.existsById(lesson.getlessonName())) {
+            throw new IllegalStateException("Lesson with the same name already exists");
+        }
         lessonsRepository.save(lesson);
     }
 

@@ -48,15 +48,15 @@ public class ProfessorsService {
 
     public void AddLesson(Long professorId, String lesson) {
 
-        Optional<Professers> professor_previous_info = professorsRepository.findById(professorId);
+        Professers professor=professorsRepository.findById(professorId).orElseThrow(()-> new IllegalStateException(
+                "professor with id "+professorId+"does not exist"
+        ));
 
-        Optional<Lessons> required_lesson = lessonsRepository.findById(lesson);
 
-        Lessons newLesson = required_lesson.get();
 
-        if (professor_previous_info.isPresent()) {
-
-            Professers professor = professor_previous_info.get();
+        Lessons newLesson=lessonsRepository.findById(lesson).orElseThrow(()-> new IllegalStateException(
+                "Lesson "+lesson+"does not exist"
+        ));
 
             if (!(professor.getdepartmentOfprofessor()==newLesson.getDepartment())) {
                  throw new IllegalStateException("The lesson's department and professor does not match!");
@@ -65,27 +65,22 @@ public class ProfessorsService {
             professor.getprofessorLessons().add(newLesson);
             professorsRepository.save(professor);
 
-        } else new IllegalStateException("Professor does not exists.");
-    }
+        }
+
 
     public void AddProfessorDepartment(Long professorId, String departmentName) {
 
-        Optional<Professers> professor_previous_info = professorsRepository.findById(professorId);
+        Professers professor=professorsRepository.findById(professorId).orElseThrow(()-> new IllegalStateException(
+                "professor with id "+professorId+"does not exist"
+        ));
 
-        Optional<Department> department_required = departmentRepository.findById(departmentName);
+        Department department=departmentRepository.findById(departmentName).orElseThrow(()-> new IllegalStateException(
+                "Department "+departmentName+"does not exists"
+        ));
+            professor.setdepartmentOfprofessor(department);
+            professorsRepository.save(professor);
 
-        Department department = department_required.get();
-
-        if (professor_previous_info.isPresent()) {
-
-            Professers professor = professor_previous_info.get();
-
-           professor.setdepartmentOfprofessor(department);
-           professorsRepository.save(professor);
-
-
-            } else new IllegalStateException("Professor does not exists.");
-        }
+    }
 
     public void chooseManagerOfDepartment(Long professor_id, String departmentName) {
         Optional<Professers> professor_previous_info = professorsRepository.findById(professor_id);

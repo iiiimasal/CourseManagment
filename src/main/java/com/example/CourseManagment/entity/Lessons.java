@@ -25,7 +25,7 @@ public class Lessons {
     @ManyToMany(mappedBy = "professorLessons")
     private List<Professers> professor;
 
-
+    //Constructor used for requesting for adding lesson with name and credit of that
     public Lessons(String lessonName, Integer credit ) {
         this.lessonName = lessonName;
         this.Credit = credit;
@@ -35,6 +35,7 @@ public class Lessons {
     public Lessons(String lessonName, Integer credit, Department department) {
         this.lessonName = lessonName;
         this.Credit = credit;
+        this.department=department;
 
     }
 

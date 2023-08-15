@@ -19,7 +19,9 @@ public class LessonsController {
     public List<Lessons> getLessons(){
          return lessonService.getLessons();
     }
+
     @PostMapping
+    //adding new lesson by specifying it's name and credit
     public void  registerNewLesson(@RequestBody Lessons lesson){
         lessonService.createNewLesson(lesson);
     }

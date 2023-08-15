@@ -115,9 +115,9 @@ public class StudentService {
         Student student=studentRepository.findById(id).orElseThrow(()-> new IllegalStateException(
                 "student with id "+id+"does not exist"
         ));
-        Optional<Department> department_required = departmentRepository.findById(departmentName);
-        Department department=department_required.get();
-
+        Department department=departmentRepository.findById(departmentName).orElseThrow(()-> new IllegalStateException(
+                "Department "+departmentName+"does not exists"
+        ));
         student.setDepartment(department);
         studentRepository.save(student);
     }

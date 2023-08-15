@@ -55,7 +55,7 @@ public class StudentController {
             ) {
         StudentService.AddLesson(id, lessonName , professor_id);
     }
-    //Update the changes required for the current student
+    //Update the changes(name and lastname) required for the current student
     @PutMapping(path  ="{id}")
     public void updateNameOfStudent(
             @PathVariable("id") Long id,

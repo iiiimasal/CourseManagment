@@ -46,15 +46,13 @@ public class LessonService {
     }
 
     public void AddDepartment(String lessonName, String departmentName) {
-        Optional<Lessons>lesson_previous_info=lessonsRepository.findById(lessonName);
-        Optional<Department>department_required=departmentRepository.findById(departmentName);
+        Lessons lesson=lessonsRepository.findById(lessonName).orElseThrow(()-> new IllegalStateException(
+                "Lesson "+lessonName+"does not exist"
+        ));
+        Department department=departmentRepository.findById(departmentName).orElseThrow(()-> new IllegalStateException(
+                "Department "+departmentName+"does not exists"
+        ));
 
-        if(lesson_previous_info.isPresent()==false){
-            throw new IllegalStateException("The lesson does not exists");
-        }
-
-        Department department=department_required.get();
-        Lessons lesson=lesson_previous_info.get();
 
         lesson.setDepartment(department);
         lessonsRepository.save(lesson);

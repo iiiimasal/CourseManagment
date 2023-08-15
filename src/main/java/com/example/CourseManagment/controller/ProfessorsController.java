@@ -27,6 +27,7 @@ public class ProfessorsController {
     }
 
     @PutMapping
+    //Adding new professor
     public void registerNewProfessor(@RequestBody Professers professer) {
         professorsService.CreateNewProfessor(professer);
 
@@ -37,6 +38,12 @@ public class ProfessorsController {
         professorsService.DeleteProfessor(professor_id);
     }
 
+    @PostMapping(path = "{professor_id}/Department")
+    public void Professor_department(
+            @PathVariable  ("professor_id") Long  professor_id,
+            @RequestParam(required = false) String DepartmentName){
+        professorsService.AddProfessorDepartment(professor_id,DepartmentName);
+    }
     @PostMapping(path = "{professor_id}/lesson")
     public void addProfessorLesson(
             @PathVariable("professor_id") Long professor_id,
@@ -44,12 +51,7 @@ public class ProfessorsController {
         professorsService.AddLesson(professor_id, lesson);
     }
 
-    @PostMapping(path = "{professor_id}/Department")
-    public void Professor_department(
-            @PathVariable  ("professor_id") Long  professor_id,
-            @RequestParam(required = false) String DepartmentName){
-        professorsService.AddProfessorDepartment(professor_id,DepartmentName);
-    }
+
     @PostMapping(path = "{professor_id}/manager")
     public void chooseManagerOfDepartment(
             @PathVariable("professor_id") Long professor_id,

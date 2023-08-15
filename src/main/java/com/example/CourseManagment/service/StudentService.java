@@ -47,6 +47,9 @@ public class StudentService {
     }
 
     public void addNewStudent(Student student) {
+        if (studentRepository.existsById(student.getNationalNum())){
+            throw new IllegalStateException("Already student exists");
+        }
         studentRepository.save(student);
 
     }
@@ -62,33 +65,33 @@ public class StudentService {
 
     public void AddLesson(Long id, String lesson , Long professor) {
 
-        Optional<Student> student_previous_info = studentRepository.findstudentByid(id);
+        Student student=studentRepository.findById(id).orElseThrow(()-> new IllegalStateException(
+                "student with id "+id+"does not exist"
+        ));
 
-        Optional<Lessons> required_lesson = lessonsRepository.findById(lesson);
+        Lessons newLesson=lessonsRepository.findById(lesson).orElseThrow(()-> new IllegalStateException(
+                "Lesson "+lesson+"does not exist"
+        ));
 
-        Optional<Professers>requiredProfessor=professorsRepository.findById(professor);
+        Professers professoRequiredr=professorsRepository.findById(professor).orElseThrow(()-> new IllegalStateException(
+                "professor with id "+professor+"does not exist"
+        ));
 
-        Lessons newLesson = required_lesson.get();
-
-        Professers wantedProfessor=requiredProfessor.get();
-
-
-        if (student_previous_info.isPresent()) {
-
-            Student student = student_previous_info.get();
-            if(student.getDepartment()==newLesson.getDepartment()&& wantedProfessor.getprofessorLessons().contains(newLesson)) {
-
-
+            if(!(student.getDepartment()==newLesson.getDepartment()&& professoRequiredr.getprofessorLessons().contains(newLesson))) {
+                throw new IllegalStateException("The professor is not for the lesson's department");
+            }
+            else {
                 if (student.getLessons() != null) {
 
                     student.getLessons().add(newLesson);
                 }
                 studentRepository.save(student);
             }
+            }
 
-        } else new IllegalStateException("Student does not exists.");
 
-    }
+
+
 
 @Transactional
     public void updateNameOfStudent(Long id, String newName, String newLastname) {

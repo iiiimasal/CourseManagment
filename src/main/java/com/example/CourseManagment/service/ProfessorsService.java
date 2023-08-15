@@ -82,14 +82,15 @@ public class ProfessorsService {
 
     }
 
-    public void chooseManagerOfDepartment(Long professor_id, String departmentName) {
-        Optional<Professers> professor_previous_info = professorsRepository.findById(professor_id);
+    public void chooseManagerOfDepartment(Long professorId, String departmentName) {
 
-        Optional<Department> department_required = departmentRepository.findById(departmentName);
-        Department department = department_required.get();
-        if (professor_previous_info.isPresent()) {
+        Professers professor=professorsRepository.findById(professorId).orElseThrow(()-> new IllegalStateException(
+                "professor with id "+professorId+"does not exist"
+        ));
 
-            Professers professor = professor_previous_info.get();
+        Department department=departmentRepository.findById(departmentName).orElseThrow(()-> new IllegalStateException(
+                "Department "+departmentName+"does not exists"
+        ));
 
             if (!professor.getdepartmentOfprofessor().equals(department)) {
                 throw new IllegalStateException("The professor mentioned is not in the required department");
@@ -97,9 +98,6 @@ public class ProfessorsService {
 
                 department.setManager(professor);
                 departmentRepository.save(department);
-
-
-        }else new IllegalStateException("Professor does not exists.");
     }
 }
 

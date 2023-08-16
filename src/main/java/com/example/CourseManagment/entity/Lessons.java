@@ -1,6 +1,8 @@
 package com.example.CourseManagment.entity;
 
-import jakarta.persistence.*;
+//import jakarta.persistence.*;
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;

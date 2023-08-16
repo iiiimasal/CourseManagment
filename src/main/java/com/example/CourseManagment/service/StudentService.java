@@ -10,13 +10,13 @@ import com.example.CourseManagment.repository.DepartmentRepository;
 import com.example.CourseManagment.repository.LessonsRepository;
 import com.example.CourseManagment.repository.ProfessorsRepository;
 import com.example.CourseManagment.repository.StudentRepository;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;

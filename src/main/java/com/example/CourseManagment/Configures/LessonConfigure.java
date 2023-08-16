@@ -1,7 +1,6 @@
 package com.example.CourseManagment.Configures;
 
 import com.example.CourseManagment.entity.Lessons;
-import com.example.CourseManagment.entity.Student;
 import com.example.CourseManagment.repository.LessonsRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;

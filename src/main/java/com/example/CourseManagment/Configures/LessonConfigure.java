@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -13,22 +14,13 @@ public class LessonConfigure {
     @Bean
    public CommandLineRunner commandLinerunner(LessonsRepository lessonsRepository){
         return args -> {
-          Lessons math=new Lessons(
-                  "Mathemathic",
-                  3
-                    );
+            Lessons math = new Lessons("Mathematics", 3);
+            Lessons algorithm = new Lessons("Algorithm", 3);
+            Lessons machine = new Lessons("Machine", 3);
 
-            Lessons Algorithem=new Lessons(
-                    "Algorithem",
-                    3
-            );
-            Lessons Machine=new Lessons(
-                    "Machine",
-                    3
-            );
-
-          lessonsRepository.saveAll(List.of(math,Algorithem,Machine));
-
+            List<Lessons> lessonsList = Arrays.asList(math, algorithm, machine);
+            lessonsRepository.saveAll(lessonsList);
         };
     }
-}
+    }
+

@@ -11,15 +11,7 @@ import java.util.List;
 @Configuration
 public class StudentConfigure {
     @Bean
-//    public CommandLineRunner init(DepartmentRepository departmentRepository) {
-//        return args -> {
-//            Department department1 = new Department("computer");
-//            Department department2 = new Department("mechanic");
-//
-//            departmentRepository.saveAll(List.of(department1, department2));
-//        };
-//    }
-//
+
    public CommandLineRunner commandLineRunner(StudentRepository studentRepository) {
         return args -> {
             Student asal = new Student(

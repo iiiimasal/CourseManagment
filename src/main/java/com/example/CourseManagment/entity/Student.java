@@ -2,7 +2,6 @@ package com.example.CourseManagment.entity;
 
 //import jakarta.persistence.*;
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class Student {
     @Column(length = 48)
     private String lastname;
     @Column(nullable = false)
-    private  long NationalNum;
+    private  long nationalNum;
     @Column(length = 128)
     private String address;
 
@@ -52,14 +51,14 @@ public class Student {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.NationalNum = nationalNum;
+        this.nationalNum = nationalNum;
         this.address = address;
     }
 
     public Student(String firstname, String lastname, long nationalNum, String address) {
         this.firstname = firstname;
         this.lastname = lastname;
-        this.NationalNum = nationalNum;
+        this.nationalNum = nationalNum;
         this.address = address;
     }
 
@@ -113,11 +112,11 @@ public class Student {
     }
 
     public long getNationalNum() {
-        return NationalNum;
+        return nationalNum;
     }
 
     public void setNationalNum(long nationalNum) {
-        NationalNum = nationalNum;
+        this.nationalNum = nationalNum;
     }
 
     public List<Lessons> getLessons() {

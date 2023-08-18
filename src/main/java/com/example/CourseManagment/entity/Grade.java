@@ -16,6 +16,9 @@ public class Grade {
     @JoinColumn(name = "student_id")
     private Student student;
 
+    @ManyToOne
+    @JoinColumn(name = "department")
+    private Department departmentOfGrade;
     private Float grade;
 
     public Grade(Lessons lesson, Student student, Float grade) {

@@ -33,6 +33,8 @@ public class Department {
     @Column(nullable = false)
     @OneToMany(mappedBy="department")
     private List<Lessons>LessonsListTotal;
+    @OneToMany(mappedBy = "departmentOfGrade")
+    private List<Grade> grades;
 
     public Department(String DepartmentName,
                       Professers manager,

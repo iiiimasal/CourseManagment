@@ -55,6 +55,17 @@ public class StudentController {
             ) {
         StudentService.AddLesson(id, lessonName , professor_id);
     }
+
+    @PutMapping(path = "{id}/grade")
+    public void addGrade(
+            @PathVariable("id") Long id,
+            @RequestParam(required = false) String lessonName,
+            @RequestParam(required = false) Float grade
+    ){
+        StudentService.addGrade(id,lessonName,grade);
+
+    }
+
     //Update the changes(name and lastname) required for the current student
     @PutMapping(path  ="{id}")
     public void updateNameOfStudent(

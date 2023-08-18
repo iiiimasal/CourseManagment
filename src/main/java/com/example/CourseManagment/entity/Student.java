@@ -29,6 +29,9 @@ public class Student {
     @Column(length = 128)
     private String address;
 
+
+
+
     @ManyToMany
     @JoinTable(
             name = "student_lesson",
@@ -37,8 +40,9 @@ public class Student {
     )
     private List<Lessons> lessons = new ArrayList<>();
 
-    // Constructors, getters, setters, and other methods
 
+    @OneToMany(mappedBy = "student")
+    private List<Grade> grades = new ArrayList<>();
 
 
 @ManyToOne()
@@ -53,6 +57,7 @@ public class Student {
         this.lastname = lastname;
         this.nationalNum = nationalNum;
         this.address = address;
+
     }
 
     public Student(String firstname, String lastname, long nationalNum, String address) {
@@ -129,5 +134,13 @@ public class Student {
 
     public Department getDepartment() {
         return department;
+    }
+
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
     }
 }

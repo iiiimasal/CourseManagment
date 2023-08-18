@@ -121,6 +121,17 @@ public class StudentService {
         student.setDepartment(department);
         studentRepository.save(student);
     }
+
+    public void addGrade(Long id, String lessonName, Float grade) {
+        Student student=studentRepository.findById(id).orElseThrow(()-> new IllegalStateException(
+                "student with id "+id+"does not exist"
+        ));
+        Lessons currentLesson=lessonsRepository.findById(lessonName).orElseThrow(()-> new IllegalStateException(
+                "Lesson "+lessonName+"does not exist"
+        ));
+
+
+    }
 }
 
 

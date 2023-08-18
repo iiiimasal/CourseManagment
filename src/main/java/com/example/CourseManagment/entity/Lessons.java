@@ -26,6 +26,9 @@ public class Lessons {
     private Department department;
     @ManyToMany(mappedBy = "professorLessons")
     private List<Professers> professor;
+    @OneToMany(mappedBy = "lesson")
+    private List<Grade> grades = new ArrayList<>();
+
 
     //Constructor used for requesting for adding lesson with name and credit of that
     public Lessons(String lessonName, Integer credit ) {
@@ -71,5 +74,13 @@ public class Lessons {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
     }
 }

@@ -74,4 +74,10 @@ public class StudentController {
             @RequestParam() String newLastname){
         StudentService.updateNameOfStudent(id,newName,newLastname);
     }
+    @GetMapping(path = "{id}/Average")
+    public float averageGrade(
+            @PathVariable("id")Long id
+    ){
+        return StudentService.getAverageGrade(id);
+    }
 }

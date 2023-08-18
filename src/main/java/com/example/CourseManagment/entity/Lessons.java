@@ -83,4 +83,28 @@ public class Lessons {
     public void setGrades(List<Grade> grades) {
         this.grades = grades;
     }
+
+    public String getLessonName() {
+        return lessonName;
+    }
+
+    public void setLessonName(String lessonName) {
+        this.lessonName = lessonName;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+    public List<Professers> getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(List<Professers> professor) {
+        this.professor = professor;
+    }
 }

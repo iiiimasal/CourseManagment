@@ -16,7 +16,7 @@ public class LessonConfigure {
         return args -> {
             Lessons math = new Lessons("Mathematics", 3);
             Lessons algorithm = new Lessons("Algorithm", 3);
-            Lessons machine = new Lessons("Machine", 3);
+            Lessons machine = new Lessons("Machine", 2);
 
             List<Lessons> lessonsList = Arrays.asList(math, algorithm, machine);
             lessonsRepository.saveAll(lessonsList);

@@ -100,4 +100,12 @@ public class Department {
     public void setLessonsListTotal(List<Lessons> LessonsListTotal) {
         this.LessonsListTotal = LessonsListTotal;
     }
+
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
+    }
 }

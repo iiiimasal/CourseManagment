@@ -22,6 +22,13 @@ public class DepartmentController {
         return departmentService.getDepartments();
     }
 
+    @GetMapping(path = "{DepartmentName}/Average")
+    public float averageOfLessonScore(
+            @PathVariable("DepartmentName")String DepartmentName
+    ){
+        return departmentService.averageOfDepartmentScore(DepartmentName);
+    }
+
     @PostMapping
     public void registerNewDepartment(@RequestBody Department department){
         departmentService.CreateNewDepartment(department);

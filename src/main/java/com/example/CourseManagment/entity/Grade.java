@@ -21,10 +21,11 @@ public class Grade {
     private Department departmentOfGrade;
     private Float grade;
 
-    public Grade(Lessons lesson, Student student, Float grade) {
+    public Grade(Lessons lesson, Student student, Float grade ,Department departmentOfGrade) {
         this.lesson = lesson;
         this.student = student;
         this.grade = grade;
+        this.departmentOfGrade=departmentOfGrade;
     }
 
     public Grade() {
@@ -60,5 +61,13 @@ public class Grade {
 
     public void setGrade(Float grade) {
         this.grade = grade;
+    }
+
+    public Department getDepartmentOfGrade() {
+        return departmentOfGrade;
+    }
+
+    public void setDepartmentOfGrade(Department departmentOfGrade) {
+        this.departmentOfGrade = departmentOfGrade;
     }
 }

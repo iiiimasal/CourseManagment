@@ -1,6 +1,7 @@
 package com.example.CourseManagment.service;
 
 import com.example.CourseManagment.entity.Department;
+import com.example.CourseManagment.entity.Grade;
 import com.example.CourseManagment.entity.Lessons;
 import com.example.CourseManagment.repository.DepartmentRepository;
 import com.example.CourseManagment.repository.LessonsRepository;
@@ -57,6 +58,22 @@ public class LessonService {
         lesson.setDepartment(department);
         lessonsRepository.save(lesson);
 
+    }
+
+    public float averageOfLessonScore(String lessonName) {
+        float sum=0;
+        int total=0;
+        Lessons lesson=lessonsRepository.findById(lessonName).orElseThrow(()-> new IllegalStateException(
+                "Lesson "+lessonName+"does not exist"
+        ));
+        if (lesson.getGrades()==null){
+            return 0;
+        }
+        for (Grade grade:lesson.getGrades()){
+            total+=grade.getLesson().getCredit();
+            sum += grade.getGrade()*grade.getLesson().getCredit();
+        }
+        return sum/total;
     }
 }
 

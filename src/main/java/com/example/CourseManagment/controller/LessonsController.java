@@ -38,4 +38,11 @@ public class LessonsController {
         lessonService.AddDepartment(lessonName,DepartmentName);
     }
 
+    @GetMapping(path = "{lessonName}/Average")
+    public float averageOfLessonScore(
+            @PathVariable("lessonName")String lessonName
+    ){
+        return lessonService.averageOfLessonScore(lessonName);
+    }
+
 }

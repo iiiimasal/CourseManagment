@@ -67,10 +67,10 @@ public class LessonService {
             return 0;
         }
         for (Grade grade:lesson.getGrades()){
-            total+=grade.getLesson().getCredit();
-            sum += grade.getGrade()*grade.getLesson().getCredit();
+
+            sum += grade.getGrade();
         }
-        return sum/total;
+        return sum/lesson.getGrades().size();
     }
 }
 

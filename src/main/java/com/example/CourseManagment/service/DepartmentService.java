@@ -3,6 +3,7 @@ package com.example.CourseManagment.service;
 import com.example.CourseManagment.entity.Department;
 import com.example.CourseManagment.entity.Grade;
 import com.example.CourseManagment.entity.Lessons;
+import com.example.CourseManagment.entity.Student;
 import com.example.CourseManagment.repository.DepartmentRepository;
 import com.example.CourseManagment.repository.GradeRepository;
 import com.example.CourseManagment.repository.ProfessorsRepository;
@@ -43,32 +44,24 @@ public class DepartmentService {
     }
 
 
-    public float averageOfDepartmentScore(String departmentName) {
-        float sum = 0;
-        int total = 0;
-        float avgOflesson = 0;
 
+public float averageOfDepartmentScore(String departmentName){
+        float sum=0;
+        int total=0;
+    float avgOflesson=0;
         Department department = departmentRepository.findById(departmentName)
                 .orElseThrow(() -> new IllegalStateException("Department " + departmentName + " does not exist"));
-
-        if (department.getGrades() == null) {
-            return 0;
-        }
-
-        for (Lessons lesson: department.getLessonsListTotal()) {
-
-            for (Grade grade:lesson.getGrades()){
-                total+=lesson.getCredit();
-                sum += grade.getGrade()*(lesson.getCredit());
+        for (Student student: department.getStudentListTotal()){
+            for (Grade grade : student.getGrades()) {
+                total+=grade.getLesson().getCredit();
+                sum += grade.getGrade()*grade.getLesson().getCredit();
             }
-            // Calculate average for each lesson and add it to avgOflesson
             avgOflesson += sum / total;
-            // Reset sum and total for the next lesson
+//            // Reset sum and total for the next lesson
             sum = 0;
             total = 0;
         }
+         return avgOflesson / department.getStudentListTotal().size();
 
-        return avgOflesson / department.getLessonsListTotal().size();
-    }
-
+}
 }

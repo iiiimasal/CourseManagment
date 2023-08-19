@@ -28,21 +28,29 @@ mvn spring-boot:run
 The application will start and you can access the API at http://localhost:8080.
 
 ## Dependencies
-– If you want to use PostgreSQL:
 
+### PostgreSQL
+
+If you want to use PostgreSQL as your database, you'll need to include the following dependency in your project's `pom.xml` file:
+
+```xml
 <dependency>
   <groupId>org.postgresql</groupId>
   <artifactId>postgresql</artifactId>
   <scope>runtime</scope>
 </dependency>
 
-– or MySQL:
+### MySQL
 
+Alternatively, if you prefer to use MySQL, add the following dependency to your project's `pom.xml` file:
+
+```xml
 <dependency>
   <groupId>com.mysql</groupId>
-  <artifactId>mysql-connector-j</artifactId>
+  <artifactId>mysql-connector-java</artifactId>
   <scope>runtime</scope>
 </dependency>
+
 
 
 This project uses the following major dependencies:

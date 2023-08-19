@@ -35,6 +35,7 @@ The application will start and you can access the API at http://localhost:8080.
   <artifactId>postgresql</artifactId>
   <scope>runtime</scope>
 </dependency>
+
 – or MySQL:
 
 <dependency>
@@ -42,8 +43,9 @@ The application will start and you can access the API at http://localhost:8080.
   <artifactId>mysql-connector-j</artifactId>
   <scope>runtime</scope>
 </dependency>
-This project uses the following major dependencies:
 
+
+This project uses the following major dependencies:
 Spring Boot
 Spring Data JPA
 Spring Web

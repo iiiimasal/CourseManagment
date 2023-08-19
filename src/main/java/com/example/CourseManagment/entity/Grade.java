@@ -16,16 +16,14 @@ public class Grade {
     @JoinColumn(name = "student_id")
     private Student student;
 
-    @ManyToOne
-    @JoinColumn(name = "department")
-    private Department departmentOfGrade;
+
     private Float grade;
 
-    public Grade(Lessons lesson, Student student, Float grade ,Department departmentOfGrade) {
+    public Grade(Lessons lesson, Student student, Float grade ) {
         this.lesson = lesson;
         this.student = student;
         this.grade = grade;
-        this.departmentOfGrade=departmentOfGrade;
+
     }
 
     public Grade() {
@@ -63,11 +61,4 @@ public class Grade {
         this.grade = grade;
     }
 
-    public Department getDepartmentOfGrade() {
-        return departmentOfGrade;
-    }
-
-    public void setDepartmentOfGrade(Department departmentOfGrade) {
-        this.departmentOfGrade = departmentOfGrade;
-    }
 }

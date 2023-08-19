@@ -126,7 +126,7 @@ public class StudentService {
             newGrade.setLesson(lesson);
             newGrade.setStudent(student);
             newGrade.setGrade(grade);
-            newGrade.setDepartmentOfGrade(lesson.getDepartment());
+            //newGrade.setDepartmentOfGrade(lesson.getDepartment());
             gradeRepository.save(newGrade);
 
             lesson.getGrades().add(newGrade);

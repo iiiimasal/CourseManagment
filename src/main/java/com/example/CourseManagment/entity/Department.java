@@ -26,8 +26,7 @@ public class Department {
     @Column(nullable = false)
     @OneToMany(mappedBy="department")
     private List<Lessons>LessonsListTotal;
-    @OneToMany(mappedBy = "departmentOfGrade")
-    private List<Grade> grades;
+
 
     public Department(String DepartmentName,
                       Professers manager,
@@ -94,11 +93,5 @@ public class Department {
         this.LessonsListTotal = LessonsListTotal;
     }
 
-    public List<Grade> getGrades() {
-        return grades;
-    }
 
-    public void setGrades(List<Grade> grades) {
-        this.grades = grades;
-    }
 }

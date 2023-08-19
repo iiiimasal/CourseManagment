@@ -1,7 +1,6 @@
 package com.example.CourseManagment.controller;
 
 import com.example.CourseManagment.entity.Professers;
-import com.example.CourseManagment.repository.ProfessorsRepository;
 import com.example.CourseManagment.service.ProfessorsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,21 +1,13 @@
 package com.example.CourseManagment.service;
 
 import com.example.CourseManagment.entity.*;
-//import com.example.CourseManagment.repository.StudentRepository;
-//import org.springframework.beans.factory.annotation.Autowired;
 import com.example.CourseManagment.repository.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.sql.SQLOutput;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class StudentService {

@@ -6,12 +6,9 @@ import com.example.CourseManagment.entity.Lessons;
 import com.example.CourseManagment.repository.DepartmentRepository;
 import com.example.CourseManagment.repository.LessonsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class LessonService {

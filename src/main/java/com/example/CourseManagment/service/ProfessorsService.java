@@ -3,16 +3,13 @@ package com.example.CourseManagment.service;
 import com.example.CourseManagment.entity.Department;
 import com.example.CourseManagment.entity.Lessons;
 import com.example.CourseManagment.entity.Professers;
-import com.example.CourseManagment.entity.Student;
 import com.example.CourseManagment.repository.DepartmentRepository;
 import com.example.CourseManagment.repository.LessonsRepository;
 import com.example.CourseManagment.repository.ProfessorsRepository;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProfessorsService {

@@ -11,31 +11,41 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "api/v1/courseMangment/Departments")
 public class DepartmentController {
+
+    // Injecting the DepartmentService dependency using constructor injection
     final DepartmentService departmentService;
+
     @Autowired
     public DepartmentController(DepartmentService departmentService) {
         this.departmentService = departmentService;
     }
 
+    // Endpoint to get a list of all departments
     @GetMapping
-    public List<Department> getDepartments(){
+    public List<Department> getDepartments() {
         return departmentService.getDepartments();
     }
 
+    // Endpoint to calculate the average score of lessons for a department
     @GetMapping(path = "{DepartmentName}/Average")
     public float averageOfLessonScore(
-            @PathVariable("DepartmentName")String DepartmentName
-    ){
+            @PathVariable("DepartmentName") String DepartmentName
+    ) {
         return departmentService.averageOfDepartmentScore(DepartmentName);
     }
 
+    // Endpoint to register a new department
     @PostMapping
-    public void registerNewDepartment(@RequestBody Department department){
+    public void registerNewDepartment(@RequestBody Department department) {
         departmentService.CreateNewDepartment(department);
     }
+
+    // Endpoint to remove a department
     @DeleteMapping(path = "{DepartmentName}")
-    public void removeDepartment(@PathVariable String DepartmentName){
+    public void removeDepartment(@PathVariable String DepartmentName) {
         departmentService.DeleteDepartment(DepartmentName);
     }
 
+
 }
+

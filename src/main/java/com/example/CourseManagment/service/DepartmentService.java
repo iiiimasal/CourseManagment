@@ -58,8 +58,8 @@ public class DepartmentService {
         for (Lessons lesson: department.getLessonsListTotal()) {
 
             for (Grade grade:lesson.getGrades()){
-                total+=grade.getLesson().getCredit();
-                sum += grade.getGrade()*(grade.getLesson().getCredit());
+                total+=lesson.getCredit();
+                sum += grade.getGrade()*(lesson.getCredit());
             }
             // Calculate average for each lesson and add it to avgOflesson
             avgOflesson += sum / total;

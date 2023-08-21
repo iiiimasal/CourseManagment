@@ -50,7 +50,7 @@ Alternatively, if you prefer to use MySQL, add the following dependency to your 
   <artifactId>mysql-connector-java</artifactId>
   <scope>runtime</scope>
 </dependency>
-
+```
 
 
 This project uses the following major dependencies:

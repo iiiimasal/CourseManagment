@@ -39,7 +39,8 @@ If you want to use PostgreSQL as your database, you'll need to include the follo
   <artifactId>postgresql</artifactId>
   <scope>runtime</scope>
 </dependency>
-
+xml
+```
 ### MySQL
 
 Alternatively, if you prefer to use MySQL, add the following dependency to your project's `pom.xml` file:
@@ -50,6 +51,8 @@ Alternatively, if you prefer to use MySQL, add the following dependency to your 
   <artifactId>mysql-connector-java</artifactId>
   <scope>runtime</scope>
 </dependency>
+
+xml
 ```
 
 

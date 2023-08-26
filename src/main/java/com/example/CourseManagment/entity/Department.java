@@ -4,7 +4,7 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
-@Table
+//@Table
 public class Department {
     @Id
     @Column(nullable = false,
@@ -15,15 +15,15 @@ public class Department {
     @OneToOne
     @JoinColumn(name = "MnagerId")
     private Professers manager;
-    @Column()
+
     @OneToMany(mappedBy="departmentOfprofessor",
             fetch = FetchType.LAZY)
     private List<Professers> professersList=new ArrayList<>();
 
-    @Column()
+
     @OneToMany(mappedBy="department")
     private List<Student>StudentListTotal;
-    @Column(nullable = false)
+
     @OneToMany(mappedBy="department")
     private List<Lessons>LessonsListTotal;
 

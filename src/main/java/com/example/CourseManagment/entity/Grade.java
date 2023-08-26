@@ -3,6 +3,7 @@ package com.example.CourseManagment.entity;
 import javax.persistence.*;
 
 @Entity
+//@Table
 public class Grade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

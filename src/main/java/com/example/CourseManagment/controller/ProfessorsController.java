@@ -1,5 +1,6 @@
 package com.example.CourseManagment.controller;
 
+import com.example.CourseManagment.DTO.ProfessorDTO;
 import com.example.CourseManagment.entity.Professers;
 import com.example.CourseManagment.service.ProfessorsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,40 +27,42 @@ public class ProfessorsController {
     }
 
     // Endpoint to register a new professor
-    @PutMapping
+    @PostMapping
     // Adding a new professor
-    public void registerNewProfessor(@RequestBody Professers professer) {
-        professorsService.CreateNewProfessor(professer);
+    public void registerNewProfessor(@RequestBody ProfessorDTO professerDTO) {
+        Professers professor=new Professers(professerDTO.getProfessorId(),professerDTO.getFirstnameProfessor(),
+                professerDTO.getLastnameProfessor(),professerDTO.getnationalNumProfessor());
+        professorsService.CreateNewProfessor(professor);
     }
 
     // Endpoint to remove a professor
-    @DeleteMapping("{professor_id}")
-    public void removeProfessor(@PathVariable Long professor_id) {
-        professorsService.DeleteProfessor(professor_id);
+    @DeleteMapping("{professorId}")
+    public void removeProfessor(@PathVariable Long professorId) {
+        professorsService.DeleteProfessor(professorId);
     }
 
     // Endpoint to add a department to a professor
-    @PostMapping(path = "{professor_id}/Department")
+    @PostMapping(path = "{professorId}/Department")
     public void Professor_department(
-            @PathVariable("professor_id") Long professor_id,
+            @PathVariable("professorId") Long professorId,
             @RequestParam(required = false) String DepartmentName) {
-        professorsService.AddProfessorDepartment(professor_id, DepartmentName);
+        professorsService.AddProfessorDepartment(professorId, DepartmentName);
     }
 
     // Endpoint to add a lesson to a professor
-    @PostMapping(path = "{professor_id}/lesson")
+    @PostMapping(path = "{professorId}/lesson")
     public void addProfessorLesson(
-            @PathVariable("professor_id") Long professor_id,
+            @PathVariable("professorId") Long professorId,
             @RequestParam(required = false) String lesson) {
-        professorsService.AddLesson(professor_id, lesson);
+        professorsService.AddLesson(professorId, lesson);
     }
 
     // Endpoint to choose a manager for a department
-    @PostMapping(path = "{professor_id}/manager")
+    @PostMapping(path = "{professorId}/manager")
     public void chooseManagerOfDepartment(
-            @PathVariable("professor_id") Long professor_id,
+            @PathVariable("professorId") Long professorId,
             @RequestParam(required = false) String DepartmentName) {
-        professorsService.chooseManagerOfDepartment(professor_id, DepartmentName);
+        professorsService.chooseManagerOfDepartment(professorId, DepartmentName);
     }
 
 

@@ -31,7 +31,7 @@ public class ProfessorsService {
     }
 
     public void CreateNewProfessor(Professers professer) {
-        if(professorsRepository.existsById(professer.getProfessor_id())){
+        if(professorsRepository.existsById(professer.getprofessorId())){
             throw new IllegalStateException("The professor is already existed");
         }
         professorsRepository.save(professer);

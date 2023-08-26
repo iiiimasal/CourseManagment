@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
-@Table
+//@Table
 
 public class Lessons {
     @Id
@@ -34,7 +34,7 @@ public class Lessons {
     public Lessons(String lessonName, Integer credit ) {
         this.lessonName = lessonName;
         this.Credit = credit;
-        //this.professor=professor;
+
     }
 
     public Lessons(String lessonName, Integer credit, Department department) {

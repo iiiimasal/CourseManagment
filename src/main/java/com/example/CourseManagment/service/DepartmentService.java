@@ -2,7 +2,6 @@ package com.example.CourseManagment.service;
 
 import com.example.CourseManagment.entity.Department;
 import com.example.CourseManagment.entity.Grade;
-import com.example.CourseManagment.entity.Lessons;
 import com.example.CourseManagment.entity.Student;
 import com.example.CourseManagment.repository.DepartmentRepository;
 import com.example.CourseManagment.repository.GradeRepository;
@@ -16,14 +15,14 @@ import java.util.List;
 public class DepartmentService {
     DepartmentRepository departmentRepository;
     ProfessorsRepository professorsRepository;
-    GradeRepository gradeRepository;
+//    GradeRepository gradeRepository;
     @Autowired
     public DepartmentService(DepartmentRepository departmentRepository  ,
-                             ProfessorsRepository professorsRepository,
-                             GradeRepository gradeRepository) {
+                             ProfessorsRepository professorsRepository
+                             ) {
         this.departmentRepository = departmentRepository;
         this.professorsRepository=professorsRepository;
-        this.gradeRepository=gradeRepository;
+        //this.gradeRepository=gradeRepository;
     }
 
 
@@ -31,7 +30,7 @@ public class DepartmentService {
     public List<Department> getDepartments() {
         return departmentRepository.findAll();
     }
-    public  void CreateNewDepartment(Department department) {
+    public  void createNewDepartment(Department department) {
         if (departmentRepository.existsById(department.getDepartmentName())) {
             throw new IllegalStateException("Department with the same name already exists");
         } else {
@@ -39,13 +38,15 @@ public class DepartmentService {
         }
     }
 
+
+
     public void DeleteDepartment(String departmentName) {
         departmentRepository.deleteById(departmentName);
     }
 
 
 
-public float averageOfDepartmentScore(String departmentName){
+ public float averageOfDepartmentScore(String departmentName){
         float sum=0;
         int total=0;
     float avgOflesson=0;

@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
+
 public class DepartmentConfigure {
     @Bean
     public CommandLineRunner commandLineRunnerD(DepartmentRepository departmentRepository){

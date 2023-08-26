@@ -1,5 +1,6 @@
 package com.example.CourseManagment.controller;
 
+import com.example.CourseManagment.DTO.StudentDTO;
 import com.example.CourseManagment.entity.Student;
 import com.example.CourseManagment.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,10 @@ public class StudentController {
 
     // Endpoint to register a new student
     @PostMapping
-    public void registerNewStudent(@RequestBody Student student) {
+    public void registerNewStudent(@RequestBody StudentDTO studentDTO) {
+        Student student=new Student(studentDTO.getFirstname(),studentDTO.getLastname(),
+                studentDTO.getNationalNum(),studentDTO.getAddress());
+
         studentService.addNewStudent(student);
     }
 
@@ -49,9 +53,9 @@ public class StudentController {
     public void updatestudent(
             @PathVariable("id") Long id,
             @RequestParam(required = false) String lessonName,
-            @RequestParam(required = false) Long professor_id
+            @RequestParam(required = false) Long professorId
     ) {
-        studentService.AddLesson(id, lessonName, professor_id);
+        studentService.AddLesson(id, lessonName, professorId);
     }
 
     // Endpoint to add a grade for a lesson of a student

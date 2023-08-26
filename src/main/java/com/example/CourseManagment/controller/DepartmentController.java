@@ -1,5 +1,6 @@
 package com.example.CourseManagment.controller;
 
+import com.example.CourseManagment.DTO.DepartmentDTO;
 import com.example.CourseManagment.entity.Department;
 import com.example.CourseManagment.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +35,12 @@ public class DepartmentController {
     }
 
     // Endpoint to register a new department
-    @PostMapping
-    public void registerNewDepartment(@RequestBody Department department) {
-        departmentService.CreateNewDepartment(department);
+    @PostMapping("/departments")
+    public void registerNewDepartment(@RequestBody DepartmentDTO departmentDTO) {
+        // Convert the DepartmentDTO to a Department entity
+        Department newDepartment = new Department(departmentDTO.getDepartmentName());
+        departmentService.createNewDepartment(newDepartment);
     }
-
     // Endpoint to remove a department
     @DeleteMapping(path = "{DepartmentName}")
     public void removeDepartment(@PathVariable String DepartmentName) {

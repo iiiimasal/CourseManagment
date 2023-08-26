@@ -7,19 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table
+//@Table
 public class Professers {
     @Id
 
     @Column(nullable = false,unique = true)
-    private long professor_id;
-    private String firstname_professor;
-    private String lastname_professor;
-    private  long nationalNum_professor;
+    private long professorId;
+    private String firstnameProfessor;
+    private String lastnameProfessor;
+    private  long nationalNumProfessor;
     @ManyToMany()
     @JoinTable(
             name = "professor_lesson",
-            joinColumns = @JoinColumn(name = "professor_id"),
+            joinColumns = @JoinColumn(name = "professorId"),
             inverseJoinColumns = @JoinColumn(name = "lesson_id")
     )
     private List<Lessons> professorLessons=new ArrayList<>();
@@ -34,54 +34,54 @@ public class Professers {
     //@JoinColumn(name = "professor-list", updatable = true)
     private Department departmentOfprofessor;
 
-    public Professers(long professor_id, String firstname_professor, String lastname_professor, long nationalNum_professor) {
-        this.professor_id = professor_id;
-        this.firstname_professor = firstname_professor;
-        this.lastname_professor = lastname_professor;
-        this.nationalNum_professor = nationalNum_professor;
+    public Professers(long professorId, String firstnameProfessor, String lastnameProfessor, long nationalNumProfessor) {
+        this.professorId = professorId;
+        this.firstnameProfessor = firstnameProfessor;
+        this.lastnameProfessor = lastnameProfessor;
+        this.nationalNumProfessor = nationalNumProfessor;
     }
 
-    public Professers(long professor_id, String firstname_professor, String lastname_professor, long nationalNum_professor, Department departmentOfprofessor) {
-        this.professor_id = professor_id;
-        this.firstname_professor = firstname_professor;
-        this.lastname_professor = lastname_professor;
-        this.nationalNum_professor = nationalNum_professor;
+    public Professers(long professorId, String firstnameProfessor, String lastnameProfessor, long nationalNumProfessor, Department departmentOfprofessor) {
+        this.professorId = professorId;
+        this.firstnameProfessor = firstnameProfessor;
+        this.lastnameProfessor = lastnameProfessor;
+        this.nationalNumProfessor = nationalNumProfessor;
         this.departmentOfprofessor = departmentOfprofessor;
     }
 
     public Professers() {
     }
 
-    public long getProfessor_id() {
-        return professor_id;
+    public long getprofessorId() {
+        return professorId;
     }
 
-    public void setProfessor_id(long professor_id) {
-        this.professor_id = professor_id;
+    public void setprofessorId(long professorId) {
+        this.professorId = professorId;
     }
 
-    public String getFirstname_professor() {
-        return firstname_professor;
+    public String getfirstnameProfessor() {
+        return firstnameProfessor;
     }
 
-    public void setFirstname_professor(String firstname_professor) {
-        this.firstname_professor = firstname_professor;
+    public void setfirstnameProfessor(String firstnameProfessor) {
+        this.firstnameProfessor = firstnameProfessor;
     }
 
-    public String getLastname_professor() {
-        return lastname_professor;
+    public String getlastnameProfessor() {
+        return lastnameProfessor;
     }
 
-    public void setLastname_professor(String lastname_professor) {
-        this.lastname_professor = lastname_professor;
+    public void setlastnameProfessor(String lastnameProfessor) {
+        this.lastnameProfessor = lastnameProfessor;
     }
 
-    public long getNationalNum_professor() {
-        return nationalNum_professor;
+    public long getnationalNumProfessor() {
+        return nationalNumProfessor;
     }
 
-    public void setNationalNum_professor(long nationalNum_professor) {
-        this.nationalNum_professor = nationalNum_professor;
+    public void setnationalNumProfessor(long nationalNumProfessor) {
+        this.nationalNumProfessor = nationalNumProfessor;
     }
 
     public List<Lessons> getprofessorLessons() {

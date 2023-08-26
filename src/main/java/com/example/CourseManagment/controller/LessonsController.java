@@ -1,5 +1,6 @@
 package com.example.CourseManagment.controller;
 
+import com.example.CourseManagment.DTO.LessonDTO;
 import com.example.CourseManagment.entity.Lessons;
 import com.example.CourseManagment.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,8 @@ public class LessonsController {
     // Endpoint to register a new lesson
     @PostMapping
     // Adding a new lesson by specifying its name and credit
-    public void registerNewLesson(@RequestBody Lessons lesson) {
+    public void registerNewLesson(@RequestBody LessonDTO lessonDTO) {
+        Lessons lesson=new Lessons(lessonDTO.getLessonName(),lessonDTO.getCredit());
         lessonService.createNewLesson(lesson);
     }
 

@@ -19,10 +19,12 @@ public class StudentService {
     GradeRepository gradeRepository;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository, LessonsRepository lessonsRepository,
+    public StudentService(StudentRepository studentRepository,
+                          LessonsRepository lessonsRepository,
                           ProfessorsRepository professorsRepository,
                           DepartmentRepository departmentRepository,
                           GradeRepository gradeRepository
+
     ) {
         this.studentRepository = studentRepository;
         this.lessonsRepository = lessonsRepository;

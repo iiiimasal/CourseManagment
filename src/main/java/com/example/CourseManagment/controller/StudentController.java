@@ -2,11 +2,16 @@ package com.example.CourseManagment.controller;
 
 import com.example.CourseManagment.DTO.StudentDTO;
 import com.example.CourseManagment.entity.Student;
+import com.example.CourseManagment.repository.StudentRepository;
 import com.example.CourseManagment.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/courseMangment/STUDENT")
@@ -14,16 +19,30 @@ public class StudentController {
 
     // Injecting the StudentService dependency using constructor injection
     private final StudentService studentService;
+    private final StudentRepository studentRepository;
 
     @Autowired
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService,
+                             StudentRepository studentRepository) {
         this.studentService = studentService;
+        this.studentRepository=studentRepository;
     }
 
     // Endpoint to get a list of all students
     @GetMapping
-    public List<Student> getStudents() {
-        return studentService.getStudents();
+    public Page<Student> getStudents(
+            @RequestParam Optional<Integer> page,
+            @RequestParam Optional<String> sortBy
+    ) {
+        return studentRepository.findAll(
+                PageRequest.of(
+                        page.orElse(0),  //if there  weren't and page assigned start from zero including two records
+                        2,
+                        Sort.Direction.ASC,sortBy.orElse("id")
+
+                )
+
+        );
     }
 
     // Endpoint to register a new student

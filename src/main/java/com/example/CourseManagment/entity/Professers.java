@@ -10,7 +10,12 @@ import java.util.List;
 //@Table
 public class Professers {
     @Id
-
+    @SequenceGenerator(name = "professor_sequence",
+    sequenceName = "professor_sequence",
+    allocationSize = 1,
+    initialValue = 100)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+    generator = "professor_sequence")
     @Column(nullable = false,unique = true)
     private long professorId;
     private String firstnameProfessor;
@@ -36,6 +41,12 @@ public class Professers {
 
     public Professers(long professorId, String firstnameProfessor, String lastnameProfessor, long nationalNumProfessor) {
         this.professorId = professorId;
+        this.firstnameProfessor = firstnameProfessor;
+        this.lastnameProfessor = lastnameProfessor;
+        this.nationalNumProfessor = nationalNumProfessor;
+    }
+
+    public Professers(String firstnameProfessor, String lastnameProfessor, long nationalNumProfessor) {
         this.firstnameProfessor = firstnameProfessor;
         this.lastnameProfessor = lastnameProfessor;
         this.nationalNumProfessor = nationalNumProfessor;

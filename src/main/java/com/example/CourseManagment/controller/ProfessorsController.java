@@ -2,29 +2,49 @@ package com.example.CourseManagment.controller;
 
 import com.example.CourseManagment.DTO.ProfessorDTO;
 import com.example.CourseManagment.entity.Professers;
+import com.example.CourseManagment.repository.ProfessorsRepository;
 import com.example.CourseManagment.service.ProfessorsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/courseMangment/Professors")
 public class ProfessorsController {
 
     // Injecting the ProfessorsService dependency using constructor injection
-    ProfessorsService professorsService;
+   private final ProfessorsService professorsService;
+   private final ProfessorsRepository professorsRepository;
 
     @Autowired
-    public ProfessorsController(ProfessorsService professorsService) {
+    public ProfessorsController(ProfessorsService professorsService,
+                                ProfessorsRepository professorsRepository) {
         this.professorsService = professorsService;
+        this.professorsRepository=professorsRepository;
     }
 
     // Endpoint to get a list of all professors
     @GetMapping
-    public List<Professers> getProfessors() {
-        return professorsService.getProfessors();
+    public Page<Professers> getProfessors(
+            @RequestParam Optional<Integer> page,
+            @RequestParam Optional<String> sortBy
+    ) {
+        return professorsRepository.findAll(
+                PageRequest.of(
+                        page.orElse(0),
+                        2,
+                        Sort.Direction.ASC,sortBy.orElse("professorId")
+
+                )
+
+        );
     }
+
 
     // Endpoint to register a new professor
     @PostMapping

@@ -52,11 +52,11 @@ public class Lessons {
 
 
 
-    public String getlessonName() {
+    public String getLessonName() {
         return lessonName;
     }
 
-    public void setlessonName(String lessonName) {
+    public void setLessonName(String lessonName) {
         this.lessonName = lessonName;
     }
 
@@ -84,13 +84,7 @@ public class Lessons {
         this.grades = grades;
     }
 
-    public String getLessonName() {
-        return lessonName;
-    }
 
-    public void setLessonName(String lessonName) {
-        this.lessonName = lessonName;
-    }
 
     public List<Student> getStudents() {
         return students;

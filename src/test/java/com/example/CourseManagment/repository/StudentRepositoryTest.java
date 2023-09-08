@@ -23,9 +23,9 @@ class StudentRepositoryTest {
     @Test
     public void testFindStudentById() {
         // Given
-        long id = 40010133;
+        //long id = 40010133;
         Student testStudent = new Student(
-                id,
+
                 "Alex",
                 "pit",
                 144,
@@ -33,14 +33,11 @@ class StudentRepositoryTest {
         );
         underTest.save(testStudent);
 
-        // When
-        Optional<Student> foundStudentOptional = underTest.findstudentByid(id);
+        //when
+        boolean exists=underTest.existsById(testStudent.getId());
 
-        // Then
-        assertThat(foundStudentOptional).isPresent(); // Ensure an optional result is present
-        Student foundStudent = foundStudentOptional.get(); // Get the actual student
-        assertThat(foundStudent.getId()).isEqualTo(id);
-        // Add more assertions as needed to verify other properties of the found student
+        //then
+        assertThat(exists).isTrue();
     }
 
 

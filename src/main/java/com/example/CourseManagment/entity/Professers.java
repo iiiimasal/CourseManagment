@@ -21,7 +21,7 @@ public class Professers {
     private String firstnameProfessor;
     private String lastnameProfessor;
     private  long nationalNumProfessor;
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "professor_lesson",
             joinColumns = @JoinColumn(name = "professorId"),

@@ -24,7 +24,8 @@ public class Lessons {
     @ManyToOne
     @JoinColumn(name = "department")
     private Department department;
-    @ManyToMany(mappedBy = "professorLessons")
+    @ManyToMany(mappedBy = "professorLessons",
+            fetch = FetchType.LAZY)
     private List<Professers> professor;
     @OneToMany(mappedBy = "lesson")
     private List<Grade> grades = new ArrayList<>();

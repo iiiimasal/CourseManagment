@@ -6,11 +6,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
-
+@DataJpaTest
 class StudentServiceTest {
 @Mock StudentRepository studentRepository;
 private StudentService underTest;
@@ -47,6 +48,7 @@ private StudentService underTest;
 
     @Test
     void deletStudent() {
+
     }
 
     @Test

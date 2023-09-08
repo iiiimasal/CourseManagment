@@ -32,7 +32,9 @@ public   class StudentService {
         this.departmentRepository = departmentRepository;
         this.gradeRepository = gradeRepository;
     }
-
+public StudentService(StudentRepository studentRepository){
+        this.studentRepository=studentRepository;
+}
 
     public List<Student> getStudents() {
         return studentRepository.findAll();

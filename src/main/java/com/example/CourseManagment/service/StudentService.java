@@ -49,7 +49,7 @@ public StudentService(StudentRepository studentRepository){
 
     }
 
-    public void DeletStudent(Long id) {
+    public void deletStudent(Long id) {
         boolean exists = studentRepository.existsById(id);
         if (!exists) {
             throw new IllegalStateException("Student with id " + id + "does not exists");

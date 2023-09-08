@@ -64,7 +64,7 @@ public class StudentController {
     // Endpoint to remove a student
     @DeleteMapping(path = "{id}")
     public void RemoveStudent(@PathVariable Long id) {
-        studentService.DeletStudent(id);
+        studentService.deletStudent(id);
     }
 
     // Endpoint to add a lesson to a student by its id

@@ -10,7 +10,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 @DataJpaTest
 class StudentServiceTest {
 @Mock StudentRepository studentRepository;
@@ -32,7 +35,6 @@ private StudentService underTest;
     void addNewStudent() {
        //given
         Student testStudent = new Student(
-                40010133,
                 "Alex",
                 "pit",
                 144,
@@ -46,10 +48,22 @@ private StudentService underTest;
         assertThat(capturedStudent).isEqualTo(testStudent);
     }
 
-    @Test
-    void deletStudent() {
 
-    }
+        @Test
+        void deleteStudent_StudentExists() {
+            // Arrange
+            Long studentId = 1L;
+
+            // Mock behavior
+            when(studentRepository.existsById(studentId)).thenReturn(true);
+
+            // Act
+            underTest.deletStudent(studentId);
+
+            // Assert
+            verify(studentRepository).deleteById(studentId);
+        }
+
 
     @Test
     void addLesson() {

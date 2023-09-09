@@ -176,8 +176,9 @@ private LessonService underTestLesson;
         //long studentID=student.getId();
         // Define and initialize the studentCaptor
         ArgumentCaptor<Student> studentCaptor = ArgumentCaptor.forClass(Student.class);
-
-        when(studentRepository.existsById(student.getId())).thenReturn(true);
+        Student updatedStudent=new Student();
+        updatedStudent=studentRepository.findByFirstname(student.getFirstname());
+        when(studentRepository.existsById(updatedStudent.getId())).thenReturn(true);
         when(departmentRepository.existsByDepartmentName(department.getDepartmentName())).thenReturn(true);
 
         // Act

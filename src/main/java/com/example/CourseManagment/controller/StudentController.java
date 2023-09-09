@@ -92,8 +92,12 @@ public class StudentController {
     public void updateNameOfStudent(
             @PathVariable("id") Long id,
             @RequestParam() String newName,
-            @RequestParam() String newLastname) {
-        studentService.updateNameOfStudent(id, newName, newLastname);
+            @RequestParam() String newLastname,
+            @RequestParam() Long newNationalNum,
+            @RequestParam() String newAddress
+
+    ) {
+        studentService.updateNameOfStudent(id, newName, newLastname,newNationalNum,newAddress);
     }
 
     // Endpoint to calculate the average grade of a student

@@ -85,7 +85,7 @@ public StudentService(StudentRepository studentRepository){
 
 
     @Transactional
-    public void updateNameOfStudent(Long id, String newName, String newLastname) {
+    public void updateNameOfStudent(Long id, String newName, String newLastname,Long newNationalNum,String newAddress) {
         Student student = studentRepository.findById(id).orElseThrow(() -> new IllegalStateException(
                 "student with id " + id + "does not exist"
         ));
@@ -99,6 +99,8 @@ public StudentService(StudentRepository studentRepository){
                 !Objects.equals(student.getLastname(), newLastname)) { //if the name provided is not the same as the current one update
             student.setLastname(newLastname);
         }
+        student.setNationalNum(newNationalNum);
+        student.setAddress(newAddress);
         studentRepository.save(student);
     }
 

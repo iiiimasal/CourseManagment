@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
 class StudentServiceTest {
 @Mock StudentRepository studentRepository;
 @Mock LessonsRepository lessonsRepository;
-@Autowired
+@Mock
 DepartmentRepository departmentRepository;
     @Captor private ArgumentCaptor<Student> studentCaptor;
 private StudentService underTest;
@@ -160,25 +160,31 @@ private LessonService underTestLesson;
         // Arrange
 
         String departmentName = "Computer Science";
+
         Student student = new Student(
                 "Alex",
                 "pit",
                 144,
                 "Canada"
         );
-        Department department = new Department(departmentName);
 
+
+        Department department = new Department(departmentName);
+        departmentRepository.save(department);
+        studentRepository.save(student);
+        //underTest.addNewStudent(student);
+        //long studentID=student.getId();
         // Define and initialize the studentCaptor
         ArgumentCaptor<Student> studentCaptor = ArgumentCaptor.forClass(Student.class);
 
         when(studentRepository.existsById(student.getId())).thenReturn(true);
-        when(departmentRepository.existsById(departmentName)).thenReturn(true);
+        when(departmentRepository.existsByDepartmentName(department.getDepartmentName())).thenReturn(true);
 
         // Act
         underTest.addDepartment(student.getId(), departmentName);
 
         // Assert
-        verify(studentRepository).save(studentCaptor.capture());
+        verify(studentRepository.save(studentCaptor.capture()));
         Student capturedStudent = studentCaptor.getValue();
         assertEquals(department, capturedStudent.getDepartment());
     }
@@ -186,6 +192,8 @@ private LessonService underTestLesson;
 
     @Test
     void addGrade() {
+
+
     }
 
     @Test

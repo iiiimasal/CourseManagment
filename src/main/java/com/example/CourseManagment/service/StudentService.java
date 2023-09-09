@@ -111,6 +111,7 @@ public StudentService(StudentRepository studentRepository){
         Department department = departmentRepository.findById(departmentName).orElseThrow(() -> new IllegalStateException(
                 "Department " + departmentName + "does not exists"
         ));
+
         student.setDepartment(department);
         studentRepository.save(student);
     }

@@ -13,12 +13,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.transaction.Transactional;
@@ -29,20 +28,23 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
-@Transactional
-@RunWith(SpringJUnit4ClassRunner.class)
+//@ExtendWith(MockitoExtension.class)
+@DataJpaTest
+//@Transactional
+//@RunWith(SpringJUnit4ClassRunner.class)
 class StudentServiceTest {
-    @Mock StudentRepository studentRepository;
-    @Mock LessonsRepository lessonsRepository;
-    @Mock DepartmentRepository departmentRepository;
+    @InjectMocks
+    private StudentService underTest;
+    @InjectMocks
+    private LessonService underTestLesson;
+    @Mock private StudentRepository studentRepository;
+    @Mock private LessonsRepository lessonsRepository;
+    @Mock private DepartmentRepository departmentRepository;
     @Captor private ArgumentCaptor<Student> studentCaptor;
-private StudentService underTest;
-private LessonService underTestLesson;
+
     @BeforeEach
     void setUp() {
-        underTest = new StudentService(studentRepository);
-        underTestLesson=new LessonService(lessonsRepository);
+        MockitoAnnotations.initMocks(this);
     }
     @Test
     void getStudents() {
@@ -166,7 +168,6 @@ private LessonService underTestLesson;
     @Test
     void addDepartment_StudentAndDepartmentExist() {
         String departmentName = "Computer Science";
-
         Student student = new Student(
                 1L,
                 "Alex",
@@ -181,13 +182,13 @@ private LessonService underTestLesson;
 
         when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
         when(departmentRepository.findById(department.getDepartmentName())).thenReturn(Optional.of(department));
-
+        ArgumentCaptor<Student> studentArgumentCaptor=ArgumentCaptor.forClass(Student.class);
 // Act
         underTest.addDepartment(student.getId(), departmentName);
 
 // Assert
-        verify(studentRepository.save(studentCaptor.capture()));
-        Student capturedStudent = studentCaptor.getValue();
+        verify(studentRepository).save(studentArgumentCaptor.capture());
+        Student capturedStudent = studentArgumentCaptor.getValue();
         assertEquals(department, capturedStudent.getDepartment());
     }
 

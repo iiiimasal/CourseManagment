@@ -6,6 +6,7 @@ import com.example.CourseManagment.entity.Professers;
 import com.example.CourseManagment.entity.Student;
 import com.example.CourseManagment.repository.DepartmentRepository;
 import com.example.CourseManagment.repository.LessonsRepository;
+import com.example.CourseManagment.repository.ProfessorsRepository;
 import com.example.CourseManagment.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -21,6 +22,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -37,9 +39,12 @@ class StudentServiceTest {
     private StudentService underTest;
     @InjectMocks
     private LessonService underTestLesson;
+    @InjectMocks
+    private  ProfessorsService underTestProffessor;
     @Mock private StudentRepository studentRepository;
     @Mock private LessonsRepository lessonsRepository;
     @Mock private DepartmentRepository departmentRepository;
+    @Mock private ProfessorsRepository professorsRepository;
     @Captor private ArgumentCaptor<Student> studentCaptor;
 
     @BeforeEach
@@ -105,49 +110,57 @@ class StudentServiceTest {
     @Test
     void deleteStudent_CreateAndThenDelete() {
         // Arrange
-        //given
-        Student testStudent = new Student(
+        Student student = new Student(
                 "Alex",
                 "pit",
                 144,
                 "Canada"
         );
-
-        // Create a student (you may need to create a student object here)
-
-        // Mock behavior
-        when(studentRepository.existsById(testStudent.getId())).thenReturn(true);
-
+        ArgumentCaptor<Student> studentArgumentCaptor = ArgumentCaptor.forClass(Student.class);
+        when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+        verify(studentRepository).save(studentArgumentCaptor.capture());
         // Act
-        underTest.deletStudent(testStudent.getId());
+        underTest.deletStudent(student.getId());
+
+        // Capture the saved student after the deletion
+        //verify(studentRepository).save(studentArgumentCaptor.capture());
 
         // Assert
-        verify(studentRepository).deleteById(testStudent.getId());
+        Student capturedStudent = studentArgumentCaptor.getValue();
+        verify(studentRepository).deleteById(capturedStudent.getId());
     }
 
 
     @Test
     void updateOfStudent_SuccessfullyUpdateFullNameAndAdditionalFields() {
         // Arrange
-        //Long studentId = 1L;
+        Student student = new Student(
+                1L,
+                "Alex",
+                "pit",
+                1444,
+                "Canada"
+        );
+
         String newName = "Alice";
         String newLastname = "Johnson";
         long newNationalNum = 45131;
         String newAddress = "123 Main St";
+        when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+        ArgumentCaptor<Student> studentArgumentCaptor=ArgumentCaptor.forClass(Student.class);
+// Act
 
-        Student existingStudent = new Student("Bob", "Smith", 55455555, "456 Elm St");
-
-        when(studentRepository.findById(existingStudent.getId())).thenReturn(Optional.of(existingStudent));
 
         // Act
-        underTest.updateNameOfStudent(existingStudent.getId(), newName, newLastname, newNationalNum, newAddress);
-
+        underTest.updateNameOfStudent(student.getId(), newName, newLastname, newNationalNum, newAddress);
+        verify(studentRepository).save(studentArgumentCaptor.capture());
+        Student capturedStudent = studentArgumentCaptor.getValue();
         // Assert
-        assertEquals(newName, existingStudent.getFirstname());
-        assertEquals(newLastname, existingStudent.getLastname());
-        assertEquals(newNationalNum, existingStudent.getNationalNum());
-        assertEquals(newAddress, existingStudent.getAddress());
-        verify(studentRepository).save(existingStudent);
+        assertEquals(newName, capturedStudent.getFirstname());
+        assertEquals(newLastname, capturedStudent.getLastname());
+        assertEquals(newNationalNum, capturedStudent.getNationalNum());
+        assertEquals(newAddress, capturedStudent.getAddress());
+        //verify(studentRepository).save(student);
     }
     @Test
     void updateOfStudent_StudentNotFound() {
@@ -165,9 +178,7 @@ class StudentServiceTest {
                 underTest.updateNameOfStudent(studentId, newName, newLastname, newNationalNum, newAddress));
         verify(studentRepository, never()).save(any());
     }
-    @Test
-    void addDepartment_StudentAndDepartmentExist() {
-        String departmentName = "Computer Science";
+    private Student createStudentAndAddDepartment(String departmentName) {
         Student student = new Student(
                 1L,
                 "Alex",
@@ -178,23 +189,97 @@ class StudentServiceTest {
 
         Department department = new Department(departmentName);
 
-//the rest of the test
-
         when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
         when(departmentRepository.findById(department.getDepartmentName())).thenReturn(Optional.of(department));
-        ArgumentCaptor<Student> studentArgumentCaptor=ArgumentCaptor.forClass(Student.class);
-// Act
+
+        student.setDepartment(department);
+
+        return student;
+    }
+
+    @Test
+    void addDepartment_StudentAndDepartmentExist() {
+        String departmentName = "Computer Science";
+        Student student = createStudentAndAddDepartment(departmentName);
+
         underTest.addDepartment(student.getId(), departmentName);
 
-// Assert
-        verify(studentRepository).save(studentArgumentCaptor.capture());
-        Student capturedStudent = studentArgumentCaptor.getValue();
-        assertEquals(department, capturedStudent.getDepartment());
+        verify(studentRepository).save(studentCaptor.capture());
+        Student capturedStudent = studentCaptor.getValue();
+        assertEquals(student.getDepartment(), capturedStudent.getDepartment());
     }
 
 
     @Test
+    public void addLesson() {
+        String departmentName = "Computer Science";
+        Student student = createStudentAndAddDepartment(departmentName);
+
+        String lessonName = "experimentTest";
+        Lessons lesson = new Lessons(lessonName, 1);
+        Professers professor = new Professers(
+                11111,
+                "George",
+                "Dan",
+                12235
+        );
+
+        // Configure mock repository behaviors
+        when(lessonsRepository.findById(lesson.getLessonName())).thenReturn(Optional.of(lesson));
+        when(professorsRepository.findById(professor.getprofessorId())).thenReturn(Optional.of(professor));
+
+        ArgumentCaptor<Student> studentArgumentCaptor = ArgumentCaptor.forClass(Student.class);
+
+        // Act
+        underTestProffessor.AddProfessorDepartment(professor.getprofessorId(), departmentName);
+        underTestLesson.AddDepartment(lessonName, departmentName);
+        underTestProffessor.AddLesson(professor.getprofessorId(), lessonName);
+
+        underTest.AddLesson(student.getId(), lessonName, professor.getprofessorId());
+
+        // Verify that specific saves were called
+        verify(studentRepository).save(studentArgumentCaptor.capture());
+        Student capturedStudent = studentArgumentCaptor.getValue();
+
+        List<Lessons> studentLessons = capturedStudent.getLessons();
+        assertEquals(1, studentLessons.size());
+        Lessons capturedLesson = studentLessons.get(0);
+
+        assertEquals(lesson, capturedLesson);
+    }
+
+
+
+    @Test
     void addGrade() {
+        String departmentName = "Computer Science";
+        Student student = createStudentAndAddDepartment(departmentName);
+
+        String lessonName = "experimentTest";
+        Lessons lesson = new Lessons(lessonName, 1);
+        Professers professor = new Professers(
+                11111,
+                "George",
+                "Dan",
+                12235
+        );
+
+        // Configure mock repository behaviors
+        when(lessonsRepository.findById(lesson.getLessonName())).thenReturn(Optional.of(lesson));
+        when(professorsRepository.findById(professor.getprofessorId())).thenReturn(Optional.of(professor));
+
+        ArgumentCaptor<Student> studentArgumentCaptor = ArgumentCaptor.forClass(Student.class);
+
+        // Act
+        underTestProffessor.AddProfessorDepartment(professor.getprofessorId(), departmentName);
+        underTestLesson.AddDepartment(lessonName, departmentName);
+        underTestProffessor.AddLesson(professor.getprofessorId(), lessonName);
+
+        underTest.AddLesson(student.getId(), lessonName, professor.getprofessorId());
+        verify(studentRepository).save(studentArgumentCaptor.capture());
+
+        //underTest.addGrade(student.getId(),lessonName,12f);
+
 
 
     }

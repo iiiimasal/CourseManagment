@@ -11,5 +11,5 @@ public interface DepartmentRepository extends JpaRepository<Department,String> {
 
 
     boolean existsByDepartmentName(String departmentName);
-
+    Optional<Department> findByDepartmentName(String departmentName);
 }

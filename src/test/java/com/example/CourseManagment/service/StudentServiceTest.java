@@ -10,12 +10,18 @@ import com.example.CourseManagment.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -23,12 +29,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
-@DataJpaTest
+@ExtendWith(MockitoExtension.class)
+@Transactional
+@RunWith(SpringJUnit4ClassRunner.class)
 class StudentServiceTest {
-@Mock StudentRepository studentRepository;
-@Mock LessonsRepository lessonsRepository;
-@Mock
-DepartmentRepository departmentRepository;
+    @Mock StudentRepository studentRepository;
+    @Mock LessonsRepository lessonsRepository;
+    @Mock DepartmentRepository departmentRepository;
     @Captor private ArgumentCaptor<Student> studentCaptor;
 private StudentService underTest;
 private LessonService underTestLesson;
@@ -58,7 +65,8 @@ private LessonService underTestLesson;
         ArgumentCaptor<Student> studentArgumentCaptor=ArgumentCaptor.forClass(Student.class);
         verify(studentRepository).save(studentArgumentCaptor.capture());
         Student capturedStudent = studentArgumentCaptor.getValue();
-
+//        String name =testStudent.getFirstname();
+//        when(studentRepository. existsByFirstname((testStudent.getFirstname())).thenReturn(true);
         assertThat(capturedStudent).isEqualTo(testStudent);
     }
 
@@ -157,34 +165,27 @@ private LessonService underTestLesson;
     }
     @Test
     void addDepartment_StudentAndDepartmentExist() {
-        // Arrange
-
         String departmentName = "Computer Science";
 
         Student student = new Student(
+                1L,
                 "Alex",
                 "pit",
-                144,
+                1444,
                 "Canada"
         );
 
-
         Department department = new Department(departmentName);
-        departmentRepository.save(department);
-        studentRepository.save(student);
-        //underTest.addNewStudent(student);
-        //long studentID=student.getId();
-        // Define and initialize the studentCaptor
-        ArgumentCaptor<Student> studentCaptor = ArgumentCaptor.forClass(Student.class);
-        Student updatedStudent=new Student();
-        updatedStudent=studentRepository.findByFirstname(student.getFirstname());
-        when(studentRepository.existsById(updatedStudent.getId())).thenReturn(true);
-        when(departmentRepository.existsByDepartmentName(department.getDepartmentName())).thenReturn(true);
 
-        // Act
+//the rest of the test
+
+        when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+        when(departmentRepository.findById(department.getDepartmentName())).thenReturn(Optional.of(department));
+
+// Act
         underTest.addDepartment(student.getId(), departmentName);
 
-        // Assert
+// Assert
         verify(studentRepository.save(studentCaptor.capture()));
         Student capturedStudent = studentCaptor.getValue();
         assertEquals(department, capturedStudent.getDepartment());

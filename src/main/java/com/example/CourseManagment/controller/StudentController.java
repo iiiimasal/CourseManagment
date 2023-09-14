@@ -64,7 +64,7 @@ public class StudentController {
     // Endpoint to remove a student
     @DeleteMapping(path = "{id}")
     public void RemoveStudent(@PathVariable Long id) {
-        studentService.DeletStudent(id);
+        studentService.deletStudent(id);
     }
 
     // Endpoint to add a lesson to a student by its id
@@ -92,8 +92,12 @@ public class StudentController {
     public void updateNameOfStudent(
             @PathVariable("id") Long id,
             @RequestParam() String newName,
-            @RequestParam() String newLastname) {
-        studentService.updateNameOfStudent(id, newName, newLastname);
+            @RequestParam() String newLastname,
+            @RequestParam() Long newNationalNum,
+            @RequestParam() String newAddress
+
+    ) {
+        studentService.updateNameOfStudent(id, newName, newLastname,newNationalNum,newAddress);
     }
 
     // Endpoint to calculate the average grade of a student

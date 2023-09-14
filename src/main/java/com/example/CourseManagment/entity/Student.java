@@ -19,7 +19,7 @@ public class Student {
             generator = "student_sequence"
     )
     @Column(nullable = false, unique = true)
-    private long id;
+    private Long id;
     @Column(length = 48) // Specify the column size to varchar(48)
     private String firstname;
     @Column(length = 48)

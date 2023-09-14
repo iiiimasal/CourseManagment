@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class StudentService {
+public   class StudentService {
     StudentRepository studentRepository;
     LessonsRepository lessonsRepository;
     ProfessorsRepository professorsRepository;
@@ -32,7 +32,9 @@ public class StudentService {
         this.departmentRepository = departmentRepository;
         this.gradeRepository = gradeRepository;
     }
-
+public StudentService(StudentRepository studentRepository){
+        this.studentRepository=studentRepository;
+}
 
     public List<Student> getStudents() {
         return studentRepository.findAll();
@@ -47,7 +49,7 @@ public class StudentService {
 
     }
 
-    public void DeletStudent(Long id) {
+    public void deletStudent(Long id) {
         boolean exists = studentRepository.existsById(id);
         if (!exists) {
             throw new IllegalStateException("Student with id " + id + "does not exists");
@@ -83,7 +85,7 @@ public class StudentService {
 
 
     @Transactional
-    public void updateNameOfStudent(Long id, String newName, String newLastname) {
+    public void updateNameOfStudent(Long id, String newName, String newLastname,Long newNationalNum,String newAddress) {
         Student student = studentRepository.findById(id).orElseThrow(() -> new IllegalStateException(
                 "student with id " + id + "does not exist"
         ));
@@ -97,6 +99,8 @@ public class StudentService {
                 !Objects.equals(student.getLastname(), newLastname)) { //if the name provided is not the same as the current one update
             student.setLastname(newLastname);
         }
+        student.setNationalNum(newNationalNum);
+        student.setAddress(newAddress);
         studentRepository.save(student);
     }
 
@@ -107,6 +111,7 @@ public class StudentService {
         Department department = departmentRepository.findById(departmentName).orElseThrow(() -> new IllegalStateException(
                 "Department " + departmentName + "does not exists"
         ));
+
         student.setDepartment(department);
         studentRepository.save(student);
     }

@@ -22,6 +22,10 @@ public class LessonService {
         this.departmentRepository=departmentRepository;
     }
 
+    public LessonService(LessonsRepository lessonsRepository) {
+        this.lessonsRepository=lessonsRepository;
+    }
+
 
     public List<Lessons> getLessons() {
         return  lessonsRepository.findAll();

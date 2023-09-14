@@ -1,13 +1,7 @@
 package com.example.CourseManagment.service;
 
-import com.example.CourseManagment.entity.Department;
-import com.example.CourseManagment.entity.Lessons;
-import com.example.CourseManagment.entity.Professers;
-import com.example.CourseManagment.entity.Student;
-import com.example.CourseManagment.repository.DepartmentRepository;
-import com.example.CourseManagment.repository.LessonsRepository;
-import com.example.CourseManagment.repository.ProfessorsRepository;
-import com.example.CourseManagment.repository.StudentRepository;
+import com.example.CourseManagment.entity.*;
+import com.example.CourseManagment.repository.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -21,7 +15,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.lang.model.util.Types;
 import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +41,7 @@ class StudentServiceTest {
     @Mock private LessonsRepository lessonsRepository;
     @Mock private DepartmentRepository departmentRepository;
     @Mock private ProfessorsRepository professorsRepository;
+    @Mock private GradeRepository gradeRepository;
     @Captor private ArgumentCaptor<Student> studentCaptor;
 
     @BeforeEach
@@ -252,39 +249,42 @@ class StudentServiceTest {
 
     @Test
     void addGrade() {
-        String departmentName = "Computer Science";
-        Student student = createStudentAndAddDepartment(departmentName);
-
-        String lessonName = "experimentTest";
-        Lessons lesson = new Lessons(lessonName, 1);
-        Professers professor = new Professers(
-                11111,
-                "George",
-                "Dan",
-                12235
+        // Create a student
+        Student student = new Student(
+                1L,
+                "Alex",
+                "pit",
+                1444,
+                "Canada"
         );
 
-        // Configure mock repository behaviors
-        when(lessonsRepository.findById(lesson.getLessonName())).thenReturn(Optional.of(lesson));
-        when(professorsRepository.findById(professor.getprofessorId())).thenReturn(Optional.of(professor));
+        // Mock the required objects
+        String lessonName = "experimentTest";
+        Lessons lesson = Mockito.mock(Lessons.class);
+        Float gradeValue = 90.5f;
 
+        // Configure mock repository behaviors
+        when(lessonsRepository.findById(lessonName)).thenReturn(Optional.of(lesson));
+        when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+
+        // Stub the behavior of the lesson object
+        when(lesson.getStudents()).thenReturn(Collections.singletonList(student));
         ArgumentCaptor<Student> studentArgumentCaptor = ArgumentCaptor.forClass(Student.class);
 
         // Act
-        underTestProffessor.AddProfessorDepartment(professor.getprofessorId(), departmentName);
-        underTestLesson.AddDepartment(lessonName, departmentName);
-        underTestProffessor.AddLesson(professor.getprofessorId(), lessonName);
-
-        underTest.AddLesson(student.getId(), lessonName, professor.getprofessorId());
+        assertDoesNotThrow(() -> underTest.addGrade(student.getId(), lessonName, gradeValue));
+        student.getGrades();
         verify(studentRepository).save(studentArgumentCaptor.capture());
+        Student capturedStudent=studentArgumentCaptor.getValue();
 
-        //underTest.addGrade(student.getId(),lessonName,12f);
-
-
-
+//        // Check if the student's grades were updated correctly
+        List<Grade> grades = capturedStudent.getGrades(); // Assuming this gets the student's grades
+        assertEquals(1, grades.size());
+        assertEquals(gradeValue, grades.get(0).getGrade());
     }
 
-    @Test
-    void getAverageGrade() {
-    }
+
+
+
+
 }

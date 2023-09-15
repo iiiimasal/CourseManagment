@@ -46,13 +46,16 @@ public   class StudentService extends  GenericService<Student,Long>{
 //
 //    }
 //
-    public void addNewStudent(Student student) {
-        if (studentRepository.existsById(student.getNationalNum())) {
-            throw new IllegalStateException("Already student exists");
-        }
-        studentRepository.save(student);
-
-    }
+//    public void addNewStudent(Student student) {
+//        if (studentRepository.existsById(student.getNationalNum())) {
+//            throw new IllegalStateException("Already student exists");
+//        }
+//        studentRepository.save(student);
+//
+//    }
+public void addNewStudent(Student student) {
+        genericService.create(Student.class,student);
+}
 
     public void deletStudent(Long id) {
         boolean exists = studentRepository.existsById(id);

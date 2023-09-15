@@ -37,9 +37,25 @@ public abstract class GenericService<T, ID> {
 //        return repository.findById(id);
 //    }
 //
-//    public T create(T entity) {
-//        return repository.save(entity);
-//    }
+    public T create(Class<T> entityClass,T entity) {
+        if (entityClass == studentClass) {
+            Student student = (Student) entity;
+            if (studentRepository.existsById(student.getNationalNum())) {
+                throw new IllegalStateException("Already student exists");
+            }
+            studentRepository.save(student);
+        }
+
+        else if(entityClass==professorClass){
+            Professers professer=(Professers) entity;
+            if(professorsRepository.existsById(professer.getprofessorId())){
+                throw new IllegalStateException("The professor is already existed");
+            }
+            professorsRepository.save(professer);
+        }
+        return null;
+    }
+
 //
 //    public T update(T entity) {
 //        return repository.save(entity);

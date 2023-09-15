@@ -35,13 +35,15 @@ public class ProfessorsService extends GenericService<Professers,Long> {
         return professorGeneric.getAll(Professers.class);
     }
 
-    public void CreateNewProfessor(Professers professer) {
-        if(professorsRepository.existsById(professer.getprofessorId())){
-            throw new IllegalStateException("The professor is already existed");
-        }
-        professorsRepository.save(professer);
-    }
-
+//    public void CreateNewProfessor(Professers professer) {
+//        if(professorsRepository.existsById(professer.getprofessorId())){
+//            throw new IllegalStateException("The professor is already existed");
+//        }
+//        professorsRepository.save(professer);
+//    }
+public void CreateNewProfessor(Professers professer) {
+        professorGeneric.create(Professers.class,professer);
+}
 
     public void DeleteProfessor(Long professorId) {
 

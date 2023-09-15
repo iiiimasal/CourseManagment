@@ -5,6 +5,7 @@ import com.example.CourseManagment.entity.Professers;
 import com.example.CourseManagment.repository.ProfessorsRepository;
 import com.example.CourseManagment.service.ProfessorsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -22,30 +23,32 @@ public class ProfessorsController {
    private final ProfessorsRepository professorsRepository;
 
     @Autowired
-    public ProfessorsController(ProfessorsService professorsService,
+    public ProfessorsController(@Lazy ProfessorsService professorsService,
                                 ProfessorsRepository professorsRepository) {
         this.professorsService = professorsService;
         this.professorsRepository=professorsRepository;
     }
 
     // Endpoint to get a list of all professors
+//    @GetMapping
+//    public Page<Professers> getProfessors(
+//            @RequestParam Optional<Integer> page,
+//            @RequestParam Optional<String> sortBy
+//    ) {
+//        return professorsRepository.findAll(
+//                PageRequest.of(
+//                        page.orElse(0),
+//                        2,
+//                        Sort.Direction.ASC,sortBy.orElse("professorId")
+//
+//                )
+//
+//        );
+//    }
     @GetMapping
-    public Page<Professers> getProfessors(
-            @RequestParam Optional<Integer> page,
-            @RequestParam Optional<String> sortBy
-    ) {
-        return professorsRepository.findAll(
-                PageRequest.of(
-                        page.orElse(0),
-                        2,
-                        Sort.Direction.ASC,sortBy.orElse("professorId")
-
-                )
-
-        );
+    public List<Professers> getProfessors(){
+        return professorsService.getProfessors();
     }
-
-
     // Endpoint to register a new professor
     @PostMapping
     // Adding a new professor

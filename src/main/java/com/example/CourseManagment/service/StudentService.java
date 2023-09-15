@@ -3,44 +3,49 @@ package com.example.CourseManagment.service;
 import com.example.CourseManagment.entity.*;
 import com.example.CourseManagment.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-
+import com.example.CourseManagment.service.GenericService;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 
 @Service
-public   class StudentService {
+public   class StudentService extends  GenericService<Student,Long>{
     StudentRepository studentRepository;
     LessonsRepository lessonsRepository;
     ProfessorsRepository professorsRepository;
     DepartmentRepository departmentRepository;
-
     GradeRepository gradeRepository;
+    private final GenericService<Student, Long> genericService;
 
     @Autowired
     public StudentService(StudentRepository studentRepository,
                           LessonsRepository lessonsRepository,
                           ProfessorsRepository professorsRepository,
                           DepartmentRepository departmentRepository,
-                          GradeRepository gradeRepository
+                          GradeRepository gradeRepository,
+                         @Lazy GenericService <Student, Long> genericService
 
     ) {
         this.studentRepository = studentRepository;
         this.lessonsRepository = lessonsRepository;
         this.professorsRepository = professorsRepository;
         this.departmentRepository = departmentRepository;
-        this.gradeRepository = gradeRepository;
+        this.gradeRepository=gradeRepository;
+        this.genericService=genericService;
     }
-public StudentService(StudentRepository studentRepository){
-        this.studentRepository=studentRepository;
-}
 
     public List<Student> getStudents() {
-        return studentRepository.findAll();
+        return genericService.getAll(Student.class);
 
     }
 
+//    public List<Student> getStudents() {
+//        return studentRepository.findAll();
+//
+//    }
+//
     public void addNewStudent(Student student) {
         if (studentRepository.existsById(student.getNationalNum())) {
             throw new IllegalStateException("Already student exists");
@@ -55,7 +60,7 @@ public StudentService(StudentRepository studentRepository){
             throw new IllegalStateException("Student with id " + id + "does not exists");
 
         }
-        studentRepository.deleteById(id);
+        genericService.delete(Student.class,id);
     }
 
     public void AddLesson(Long id, String lesson, Long professor) {

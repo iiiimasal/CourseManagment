@@ -3,31 +3,36 @@ package com.example.CourseManagment.service;
 import com.example.CourseManagment.entity.Department;
 import com.example.CourseManagment.entity.Lessons;
 import com.example.CourseManagment.entity.Professers;
+import com.example.CourseManagment.entity.Student;
 import com.example.CourseManagment.repository.DepartmentRepository;
 import com.example.CourseManagment.repository.LessonsRepository;
 import com.example.CourseManagment.repository.ProfessorsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ProfessorsService {
+public class ProfessorsService extends GenericService<Professers,Long> {
     ProfessorsRepository professorsRepository;
     LessonsRepository lessonsRepository;
     DepartmentRepository departmentRepository;
+    private final GenericService<Professers, Long> professorGeneric;
 
     @Autowired
     public ProfessorsService(ProfessorsRepository professorsRepository,
                              LessonsRepository lessonsRepository,
-                             DepartmentRepository departmentRepository) {
+                             DepartmentRepository departmentRepository,
+                          @Lazy GenericService<Professers, Long> professorGeneric) {
         this.professorsRepository = professorsRepository;
         this.lessonsRepository = lessonsRepository;
         this.departmentRepository = departmentRepository;
+        this.professorGeneric=professorGeneric;
     }
 
     public List<Professers> getProfessors() {
-        return professorsRepository.findAll();
+        return professorGeneric.getAll(Professers.class);
     }
 
     public void CreateNewProfessor(Professers professer) {
@@ -39,7 +44,8 @@ public class ProfessorsService {
 
 
     public void DeleteProfessor(Long professorId) {
-        professorsRepository.deleteById(professorId);
+
+        professorGeneric.delete(Professers.class,professorId);
     }
 
 

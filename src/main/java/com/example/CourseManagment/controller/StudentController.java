@@ -5,6 +5,7 @@ import com.example.CourseManagment.entity.Student;
 import com.example.CourseManagment.repository.StudentRepository;
 import com.example.CourseManagment.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -22,28 +23,33 @@ public class StudentController {
     private final StudentRepository studentRepository;
 
     @Autowired
-    public StudentController(StudentService studentService,
+    public StudentController(@Lazy StudentService studentService,
                              StudentRepository studentRepository) {
         this.studentService = studentService;
         this.studentRepository=studentRepository;
     }
 
     // Endpoint to get a list of all students
+//    @GetMapping
+//    public Page<Student> getStudents(
+//            @RequestParam Optional<Integer> page,
+//            @RequestParam Optional<String> sortBy
+//    ) {
+//        return studentRepository.findAll(
+//                PageRequest.of(
+//                        page.orElse(0),  //if there  weren't and page assigned start from zero including two records
+//                        2,
+//                        Sort.Direction.ASC,sortBy.orElse("id")
+//
+//                )
+//
+//        );
+//    }
     @GetMapping
-    public Page<Student> getStudents(
-            @RequestParam Optional<Integer> page,
-            @RequestParam Optional<String> sortBy
-    ) {
-        return studentRepository.findAll(
-                PageRequest.of(
-                        page.orElse(0),  //if there  weren't and page assigned start from zero including two records
-                        2,
-                        Sort.Direction.ASC,sortBy.orElse("id")
-
-                )
-
-        );
+    public List<Student> getStudents(){
+        return studentService.getStudents();
     }
+
 
     // Endpoint to register a new student
     @PostMapping

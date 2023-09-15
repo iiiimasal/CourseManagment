@@ -2,46 +2,48 @@ package com.example.CourseManagment.service;
 
 import com.example.CourseManagment.entity.Department;
 import com.example.CourseManagment.entity.Grade;
+import com.example.CourseManagment.entity.Professers;
 import com.example.CourseManagment.entity.Student;
 import com.example.CourseManagment.repository.DepartmentRepository;
 import com.example.CourseManagment.repository.GradeRepository;
 import com.example.CourseManagment.repository.ProfessorsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 
 @Service
-public class DepartmentService {
+public class DepartmentService  extends GenericService<Department,String>{
     DepartmentRepository departmentRepository;
     ProfessorsRepository professorsRepository;
 //    GradeRepository gradeRepository;
+    private GenericService<Department,String>departmentGeneric;
     @Autowired
     public DepartmentService(DepartmentRepository departmentRepository  ,
-                             ProfessorsRepository professorsRepository
+                             ProfessorsRepository professorsRepository,
+                             @Lazy GenericService<Department,String>departmentGeneric
                              ) {
         this.departmentRepository = departmentRepository;
         this.professorsRepository=professorsRepository;
+        this.departmentGeneric=departmentGeneric;
         //this.gradeRepository=gradeRepository;
     }
 
 
 
     public List<Department> getDepartments() {
-        return departmentRepository.findAll();
+        return departmentGeneric.getAll(Department.class);
     }
     public  void createNewDepartment(Department department) {
-        if (departmentRepository.existsById(department.getDepartmentName())) {
-            throw new IllegalStateException("Department with the same name already exists");
-        } else {
-            departmentRepository.save(department);
-        }
+       departmentGeneric.create(Department.class,department);
     }
 
 
 
     public void DeleteDepartment(String departmentName) {
-        departmentRepository.deleteById(departmentName);
+
+        departmentGeneric.delete(Department.class,departmentName);
     }
 
 

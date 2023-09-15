@@ -5,6 +5,7 @@ import com.example.CourseManagment.entity.Department;
 import com.example.CourseManagment.repository.DepartmentRepository;
 import com.example.CourseManagment.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -22,27 +23,31 @@ public class DepartmentController {
     private final DepartmentRepository departmentRepository;
 
     @Autowired
-    public DepartmentController(DepartmentService departmentService,
+    public DepartmentController(@Lazy DepartmentService departmentService,
                                 DepartmentRepository departmentRepository) {
         this.departmentService = departmentService;
         this.departmentRepository=departmentRepository;
     }
 
     // Endpoint to get a list of all departments
+//    @GetMapping
+//    public Page<Department> getDepartment(
+//            @RequestParam Optional<Integer> page,
+//            @RequestParam Optional<String> sortBy
+//    ) {
+//        return departmentRepository.findAll(
+//                PageRequest.of(
+//                        page.orElse(0),
+//                        2,
+//                        Sort.Direction.ASC,sortBy.orElse("departmentName")
+//
+//                )
+//
+//        );
+//    }
     @GetMapping
-    public Page<Department> getDepartment(
-            @RequestParam Optional<Integer> page,
-            @RequestParam Optional<String> sortBy
-    ) {
-        return departmentRepository.findAll(
-                PageRequest.of(
-                        page.orElse(0),
-                        2,
-                        Sort.Direction.ASC,sortBy.orElse("departmentName")
-
-                )
-
-        );
+    public List<Department> getDepartment(){
+       return departmentService.getDepartments();
     }
 
 

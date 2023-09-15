@@ -1,7 +1,9 @@
 package com.example.CourseManagment.service;
 
+import com.example.CourseManagment.entity.Department;
 import com.example.CourseManagment.entity.Professers;
 import com.example.CourseManagment.entity.Student;
+import com.example.CourseManagment.repository.DepartmentRepository;
 import com.example.CourseManagment.repository.ProfessorsRepository;
 import com.example.CourseManagment.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +21,12 @@ public abstract class GenericService<T, ID> {
     private StudentRepository studentRepository;
     @Autowired
     private ProfessorsRepository professorsRepository;
+    @Autowired
+    private DepartmentRepository departmentRepository;
 
     Class<?> studentClass = Student.class;
     Class<?>professorClass= Professers.class;
+    Class<?>departmentClass= Department.class;
 
     public List<T> getAll(Class<T> entityClass) {
         if (entityClass ==studentClass) {
@@ -30,6 +35,9 @@ public abstract class GenericService<T, ID> {
       if (entityClass==professorClass) {
             return (List<T>) professorsRepository.findAll();
         }
+      if(entityClass==departmentClass){
+          return (List<T>) departmentRepository.findAll();
+      }
         return null;
     }
 //
@@ -53,6 +61,14 @@ public abstract class GenericService<T, ID> {
             }
             professorsRepository.save(professer);
         }
+        else if(entityClass==departmentClass){
+            Department department=(Department)entity;
+            if (departmentRepository.existsById(department.getDepartmentName())) {
+                throw new IllegalStateException("Department with the same name already exists");
+            } else {
+                departmentRepository.save(department);
+            }
+        }
         return null;
     }
 
@@ -61,16 +77,20 @@ public abstract class GenericService<T, ID> {
 //        return repository.save(entity);
 //    }
 //
-    public void delete(Class<T>entityClass,Long id) {
+    public void delete(Class<T>entityClass,Object id) {
         System.out.println("Deleting entity of type: " + entityClass.getName() + " with ID: " + id);
 
         if (entityClass ==studentClass ) {
             System.out.println("in the first condition");
-            studentRepository.deleteById( id);
+            studentRepository.deleteById( (Long)id);
         }
         else if (entityClass ==professorClass ) {
             System.out.println("in the second condition");
-            professorsRepository.deleteById(id);
+            professorsRepository.deleteById((Long)id);
+        }
+        else if (entityClass ==departmentClass ) {
+            System.out.println("in the third condition");
+           departmentRepository.deleteById((String) id);
         }
     }
 }

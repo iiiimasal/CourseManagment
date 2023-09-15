@@ -6,20 +6,24 @@ import com.example.CourseManagment.entity.Lessons;
 import com.example.CourseManagment.repository.DepartmentRepository;
 import com.example.CourseManagment.repository.LessonsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class LessonService {
+public class LessonService extends GenericService<Lessons,String> {
 
     LessonsRepository lessonsRepository;
     DepartmentRepository departmentRepository;
+   private GenericService<Lessons, String>lessonGeneric;
     @Autowired
     LessonService(LessonsRepository lessonsRepository ,
-                  DepartmentRepository departmentRepository){
+                  DepartmentRepository departmentRepository,
+                 @Lazy GenericService<Lessons, String>lessonGeneric){
         this.lessonsRepository=lessonsRepository;
         this.departmentRepository=departmentRepository;
+        this.lessonGeneric=lessonGeneric;
     }
 
     public LessonService(LessonsRepository lessonsRepository) {
@@ -28,23 +32,15 @@ public class LessonService {
 
 
     public List<Lessons> getLessons() {
-        return  lessonsRepository.findAll();
+        return lessonGeneric.getAll(Lessons.class);
     }
 
     public void createNewLesson(Lessons lesson) {
-        if (lessonsRepository.existsById(lesson.getLessonName())) {
-            throw new IllegalStateException("Lesson with the same name already exists");
-        }
-        lessonsRepository.save(lesson);
+        lessonGeneric.create(Lessons.class,lesson);
     }
 
     public void DeleteLesson(String lessonName) {
-        boolean exists= lessonsRepository.existsById(lessonName);
-        if(!exists){
-            throw new IllegalStateException("Lesson with name "+lessonName+" does not exists");
-
-        }
-        lessonsRepository.deleteById(lessonName);
+        lessonGeneric.delete(Lessons.class,lessonName);
     }
 
     public void AddDepartment(String lessonName, String departmentName) {

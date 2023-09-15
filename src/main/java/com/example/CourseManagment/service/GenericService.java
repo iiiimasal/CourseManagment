@@ -1,9 +1,11 @@
 package com.example.CourseManagment.service;
 
 import com.example.CourseManagment.entity.Department;
+import com.example.CourseManagment.entity.Lessons;
 import com.example.CourseManagment.entity.Professers;
 import com.example.CourseManagment.entity.Student;
 import com.example.CourseManagment.repository.DepartmentRepository;
+import com.example.CourseManagment.repository.LessonsRepository;
 import com.example.CourseManagment.repository.ProfessorsRepository;
 import com.example.CourseManagment.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +25,13 @@ public abstract class GenericService<T, ID> {
     private ProfessorsRepository professorsRepository;
     @Autowired
     private DepartmentRepository departmentRepository;
+    @Autowired
+    private LessonsRepository lessonsRepository;
 
     Class<?> studentClass = Student.class;
     Class<?>professorClass= Professers.class;
     Class<?>departmentClass= Department.class;
+    Class<?>lessonClass= Lessons.class;
 
     public List<T> getAll(Class<T> entityClass) {
         if (entityClass ==studentClass) {
@@ -38,6 +43,9 @@ public abstract class GenericService<T, ID> {
       if(entityClass==departmentClass){
           return (List<T>) departmentRepository.findAll();
       }
+        if(entityClass==lessonClass){
+            return (List<T>) lessonsRepository.findAll();
+        }
         return null;
     }
 //
@@ -69,6 +77,13 @@ public abstract class GenericService<T, ID> {
                 departmentRepository.save(department);
             }
         }
+        else if(entityClass==lessonClass){
+            Lessons lesson=(Lessons) entity;
+            if (lessonsRepository.existsById(lesson.getLessonName())) {
+                throw new IllegalStateException("Lesson with the same name already exists");
+            }
+            lessonsRepository.save(lesson);
+        }
         return null;
     }
 
@@ -91,6 +106,14 @@ public abstract class GenericService<T, ID> {
         else if (entityClass ==departmentClass ) {
             System.out.println("in the third condition");
            departmentRepository.deleteById((String) id);
+        }
+        else if(entityClass==lessonClass){
+            boolean exists= lessonsRepository.existsById((String) id);
+            if(!exists){
+                throw new IllegalStateException("Lesson with name "+id+" does not exists");
+
+            }
+            lessonsRepository.deleteById((String) id);
         }
     }
 }

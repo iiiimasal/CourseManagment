@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "api/v1/courseMangment/Departments")
+@RequestMapping(path = "api/v1/courseMangment/department")
 public class DepartmentController {
 
     // Injecting the DepartmentService dependency using constructor injection
@@ -52,7 +52,7 @@ public class DepartmentController {
 
 
     // Endpoint to calculate the average score of lessons for a department
-    @GetMapping(path = "{DepartmentName}/Average")
+    @GetMapping(path = "{DepartmentName}/average-of-department")
     public float averageOfLessonScore(
             @PathVariable("DepartmentName") String DepartmentName
     ) {
@@ -60,7 +60,7 @@ public class DepartmentController {
     }
 
     // Endpoint to register a new department
-    @PostMapping("/departments")
+    @PostMapping("/adding-new-department")
     public void registerNewDepartment(@RequestBody DepartmentDTO departmentDTO) {
         // Convert the DepartmentDTO to a Department entity
         Department newDepartment = new Department(departmentDTO.getDepartmentName());

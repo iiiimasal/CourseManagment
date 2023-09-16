@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "api/v1/courseMangment/Professors")
+@RequestMapping(path = "api/v1/courseMangment/professors")
 public class ProfessorsController {
 
     // Injecting the ProfessorsService dependency using constructor injection
@@ -65,7 +65,7 @@ public class ProfessorsController {
     }
 
     // Endpoint to add a department to a professor
-    @PostMapping(path = "{professorId}/Department")
+    @PostMapping(path = "{professorId}/department")
     public void Professor_department(
             @PathVariable("professorId") Long professorId,
             @RequestParam(required = false) String DepartmentName) {

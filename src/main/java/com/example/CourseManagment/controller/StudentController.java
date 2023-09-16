@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "api/v1/courseMangment/STUDENT")
+@RequestMapping(path = "api/v1/courseMangment/student")
 public class StudentController {
 
     // Injecting the StudentService dependency using constructor injection
@@ -107,7 +107,7 @@ public class StudentController {
     }
 
     // Endpoint to calculate the average grade of a student
-    @GetMapping(path = "{id}/Average")
+    @GetMapping(path = "{id}/average")
     public float averageGrade(
             @PathVariable("id") Long id
     ) {

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "api/v1/courseMangment/Lessons")
+@RequestMapping(path = "api/v1/courseMangment/lessons")
 public class LessonsController {
 
     // Injecting the LessonService dependency using constructor injection
@@ -65,7 +65,7 @@ public class LessonsController {
     }
 
     // Endpoint to add a department to a lesson
-    @PostMapping(path = "{lessonName}")
+    @PostMapping(path = "{lessonName}/department")
     public void addDepartment(
             @PathVariable("lessonName") String lessonName,
             @RequestParam(required = false) String DepartmentName) {
@@ -73,7 +73,7 @@ public class LessonsController {
     }
 
     // Endpoint to calculate the average score of a lesson
-    @GetMapping(path = "{lessonName}/Average")
+    @GetMapping(path = "{lessonName}/average-of-lesson")
     public float averageOfLessonScore(
             @PathVariable("lessonName") String lessonName
     ) {

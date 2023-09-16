@@ -250,13 +250,8 @@ class StudentServiceTest {
     @Test
     void addGrade() {
         // Create a student
-        Student student = new Student(
-                1L,
-                "Alex",
-                "pit",
-                1444,
-                "Canada"
-        );
+        String departmentName = "Computer Science";
+        Student student = createStudentAndAddDepartment(departmentName);
 
         // Mock the required objects
         String lessonName = "experimentTest";

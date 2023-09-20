@@ -36,7 +36,7 @@ public   class StudentService extends  GenericService<Student,Long> implements S
         this.gradeRepository=gradeRepository;
         this.genericService=genericService;
     }
-
+    @Override
     public List<Student> getStudents() {
         return genericService.getAll(Student.class);
 
@@ -54,6 +54,7 @@ public   class StudentService extends  GenericService<Student,Long> implements S
 //        studentRepository.save(student);
 //
 //    }
+@Override
 public void addNewStudent(Student student) {
         genericService.create(Student.class,student);
 }
@@ -66,7 +67,7 @@ public void addNewStudent(Student student) {
         }
         genericService.delete(Student.class,id);
     }
-
+    @Override
     public void AddLesson(Long id, String lesson, Long professor) {
 
         Student student = studentRepository.findById(id).orElseThrow(() -> new IllegalStateException(
@@ -92,7 +93,7 @@ public void addNewStudent(Student student) {
         }
     }
 
-
+    @Override
     @Transactional
     public void updateNameOfStudent(Long id, String newName, String newLastname,Long newNationalNum,String newAddress) {
         Student student = studentRepository.findById(id).orElseThrow(() -> new IllegalStateException(
@@ -112,7 +113,7 @@ public void addNewStudent(Student student) {
         student.setAddress(newAddress);
         studentRepository.save(student);
     }
-
+    @Override
     public void addDepartment(Long id, String departmentName) {
         Student student = studentRepository.findById(id).orElseThrow(() -> new IllegalStateException(
                 "student with id " + id + "does not exist"
@@ -124,7 +125,7 @@ public void addNewStudent(Student student) {
         student.setDepartment(department);
         studentRepository.save(student);
     }
-
+    @Override
     public void addGrade(Long id, String lessonName, Float grade) {
         Student student = studentRepository.findById(id).orElseThrow(() -> new IllegalStateException(
                 "student with id " + id + "does not exist"
@@ -152,7 +153,7 @@ public void addNewStudent(Student student) {
         }
     }
 
-
+    @Override
     public float getAverageGrade(Long id) {
         float sum = 0;
         int totall=0;

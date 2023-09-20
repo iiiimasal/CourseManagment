@@ -31,7 +31,7 @@ public class ProfessorsService extends GenericService<Professers,Long>  implemen
         this.departmentRepository = departmentRepository;
         this.professorGeneric=professorGeneric;
     }
-
+    @Override
     public List<Professers> getProfessors() {
         return professorGeneric.getAll(Professers.class);
     }
@@ -42,6 +42,7 @@ public class ProfessorsService extends GenericService<Professers,Long>  implemen
 //        }
 //        professorsRepository.save(professer);
 //    }
+@Override
 public void CreateNewProfessor(Professers professer) {
         professorGeneric.create(Professers.class,professer);
 }
@@ -51,7 +52,7 @@ public void CreateNewProfessor(Professers professer) {
         professorGeneric.delete(Professers.class,professorId);
     }
 
-
+    @Override
     public void AddLesson(Long professorId, String lesson) {
 
         Professers professor=professorsRepository.findById(professorId).orElseThrow(()-> new IllegalStateException(
@@ -72,7 +73,7 @@ public void CreateNewProfessor(Professers professer) {
             professorsRepository.save(professor);
 
         }
-
+    @Override
 
     public void AddProfessorDepartment(Long professorId, String departmentName) {
 
@@ -87,7 +88,7 @@ public void CreateNewProfessor(Professers professer) {
             professorsRepository.save(professor);
 
     }
-
+    @Override
     public void chooseManagerOfDepartment(Long professorId, String departmentName) {
 
         Professers professor=professorsRepository.findById(professorId).orElseThrow(()-> new IllegalStateException(

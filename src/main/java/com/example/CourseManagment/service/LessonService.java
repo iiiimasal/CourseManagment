@@ -31,19 +31,19 @@ public class LessonService extends GenericService<Lessons,String> implements Les
         this.lessonsRepository=lessonsRepository;
     }
 
-
+    @Override
     public List<Lessons> getLessons() {
         return lessonGeneric.getAll(Lessons.class);
     }
-
+    @Override
     public void createNewLesson(Lessons lesson) {
         lessonGeneric.create(Lessons.class,lesson);
     }
-
+    @Override
     public void DeleteLesson(String lessonName) {
         lessonGeneric.delete(Lessons.class,lessonName);
     }
-
+    @Override
     public void AddDepartment(String lessonName, String departmentName) {
         Lessons lesson=lessonsRepository.findById(lessonName).orElseThrow(()-> new IllegalStateException(
                 "Lesson "+lessonName+"does not exist"
@@ -57,7 +57,7 @@ public class LessonService extends GenericService<Lessons,String> implements Les
         lessonsRepository.save(lesson);
 
     }
-
+    @Override
     public float averageOfLessonScore(String lessonName) {
         float sum=0;
         int total=0;

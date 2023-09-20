@@ -32,27 +32,28 @@ public class DepartmentService  extends GenericService<Department,String> implem
     }
 
 
-
+    @Override
     public List<Department> getDepartments() {
         return departmentGeneric.getAll(Department.class);
     }
+    @Override
     public  void createNewDepartment(Department department) {
        departmentGeneric.create(Department.class,department);
     }
 
 
-
+    @Override
     public void DeleteDepartment(String departmentName) {
 
         departmentGeneric.delete(Department.class,departmentName);
     }
 
 
-
- public float averageOfDepartmentScore(String departmentName){
+    @Override
+    public float averageOfDepartmentScore(String departmentName){
         float sum=0;
         int total=0;
-    float avgOflesson=0;
+        float avgOflesson=0;
         Department department = departmentRepository.findById(departmentName)
                 .orElseThrow(() -> new IllegalStateException("Department " + departmentName + " does not exist"));
         for (Student student: department.getStudentListTotal()){

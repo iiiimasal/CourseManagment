@@ -1,17 +1,18 @@
 package com.example.CourseManagment.service;
 
+import com.example.CourseManagment.Abstraction.StudentInterface;
 import com.example.CourseManagment.entity.*;
 import com.example.CourseManagment.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import com.example.CourseManagment.service.GenericService;
+
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 
 @Service
-public   class StudentService extends  GenericService<Student,Long>{
+public   class StudentService extends  GenericService<Student,Long> implements StudentInterface {
     StudentRepository studentRepository;
     LessonsRepository lessonsRepository;
     ProfessorsRepository professorsRepository;
@@ -57,7 +58,7 @@ public void addNewStudent(Student student) {
         genericService.create(Student.class,student);
 }
 
-    public void deletStudent(Long id) {
+    public void deleteStudent(Long id) {
         boolean exists = studentRepository.existsById(id);
         if (!exists) {
             throw new IllegalStateException("Student with id " + id + "does not exists");

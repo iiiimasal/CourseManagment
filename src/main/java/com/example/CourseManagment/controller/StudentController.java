@@ -6,13 +6,9 @@ import com.example.CourseManagment.repository.StudentRepository;
 import com.example.CourseManagment.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/courseMangment/student")
@@ -70,7 +66,7 @@ public class StudentController {
     // Endpoint to remove a student
     @DeleteMapping(path = "{id}")
     public void RemoveStudent(@PathVariable Long id) {
-        studentService.deletStudent(id);
+        studentService.deleteStudent(id);
     }
 
     // Endpoint to add a lesson to a student by its id

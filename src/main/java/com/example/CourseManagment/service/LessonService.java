@@ -1,5 +1,6 @@
 package com.example.CourseManagment.service;
 
+import com.example.CourseManagment.Abstraction.LessonInterface;
 import com.example.CourseManagment.entity.Department;
 import com.example.CourseManagment.entity.Grade;
 import com.example.CourseManagment.entity.Lessons;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class LessonService extends GenericService<Lessons,String> {
+public class LessonService extends GenericService<Lessons,String> implements LessonInterface {
 
     LessonsRepository lessonsRepository;
     DepartmentRepository departmentRepository;

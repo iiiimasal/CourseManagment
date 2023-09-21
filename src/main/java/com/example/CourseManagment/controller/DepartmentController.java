@@ -19,7 +19,7 @@ import java.util.Optional;
 public class DepartmentController {
 
     // Injecting the DepartmentService dependency using constructor injection
-    final DepartmentService departmentService;
+   private final DepartmentService departmentService;
     private final DepartmentRepository departmentRepository;
 
     @Autowired

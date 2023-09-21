@@ -20,13 +20,12 @@ public class ProfessorsController {
 
     // Injecting the ProfessorsService dependency using constructor injection
    private final ProfessorsService professorsService;
-   private final ProfessorsRepository professorsRepository;
+
 
     @Autowired
-    public ProfessorsController(@Lazy ProfessorsService professorsService,
-                                ProfessorsRepository professorsRepository) {
+    public ProfessorsController(@Lazy ProfessorsService professorsService) {
         this.professorsService = professorsService;
-        this.professorsRepository=professorsRepository;
+
     }
 
     // Endpoint to get a list of all professors

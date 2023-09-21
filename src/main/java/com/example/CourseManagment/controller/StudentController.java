@@ -16,13 +16,12 @@ public class StudentController {
 
     // Injecting the StudentService dependency using constructor injection
     private final StudentService studentService;
-    private final StudentRepository studentRepository;
+
 
     @Autowired
-    public StudentController(@Lazy StudentService studentService,
-                             StudentRepository studentRepository) {
+    public StudentController(@Lazy StudentService studentService) {
         this.studentService = studentService;
-        this.studentRepository=studentRepository;
+
     }
 
     // Endpoint to get a list of all students

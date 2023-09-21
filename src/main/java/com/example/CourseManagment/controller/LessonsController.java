@@ -20,13 +20,12 @@ public class LessonsController {
 
     // Injecting the LessonService dependency using constructor injection
    private final LessonService lessonService;
-   private final LessonsRepository lessonsRepository;
+
 
     @Autowired
-    public LessonsController(@Lazy LessonService lessonService,
-                             LessonsRepository lessonsRepository) {
+    public LessonsController(@Lazy LessonService lessonService) {
         this.lessonService = lessonService;
-        this.lessonsRepository=lessonsRepository;
+
     }
 
     // Endpoint to get a list of all lessons

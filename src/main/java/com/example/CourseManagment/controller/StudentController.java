@@ -70,7 +70,7 @@ public class StudentController {
 
     // Endpoint to add a lesson to a student by its id
     @PostMapping(path = "{id}/lesson")
-    public void updatestudent(
+    public void addLessons(
             @PathVariable("id") Long id,
             @RequestParam(required = false) String lessonName,
             @RequestParam(required = false) Long professorId

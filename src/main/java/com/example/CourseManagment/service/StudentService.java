@@ -15,26 +15,38 @@ import java.util.Objects;
 public   class StudentService extends  GenericService<Student,Long> implements StudentInterface {
     private   StudentRepository studentRepository;
     private  LessonsRepository lessonsRepository;
+    private LessonService lessonService;
     private ProfessorsRepository professorsRepository;
+    private ProfessorsService professorsService;
     private DepartmentRepository departmentRepository;
+    private  DepartmentService departmentService;
     private GradeRepository gradeRepository;
+    private GradeServices gradeServices;
     private final GenericService<Student, Long> genericService;
 
     @Autowired
     public StudentService(StudentRepository studentRepository,
                           LessonsRepository lessonsRepository,
+                          LessonService lessonService,
                           ProfessorsRepository professorsRepository,
+                          ProfessorsService professorsService,
                           DepartmentRepository departmentRepository,
                           GradeRepository gradeRepository,
-                         @Lazy GenericService <Student, Long> genericService
+                          GradeServices gradeServices,
+                         @Lazy GenericService <Student, Long> genericService,
+                          DepartmentService departmentService
 
     ) {
         this.studentRepository = studentRepository;
         this.lessonsRepository = lessonsRepository;
+        this.lessonService=lessonService;
         this.professorsRepository = professorsRepository;
+        this.professorsService=professorsService;
         this.departmentRepository = departmentRepository;
         this.gradeRepository=gradeRepository;
+        this.gradeServices=gradeServices;
         this.genericService=genericService;
+        this.departmentService=departmentService;
     }
     @Override
     public List<Student> getStudents() {
@@ -55,7 +67,7 @@ public   class StudentService extends  GenericService<Student,Long> implements S
 //
 //    }
 @Override
-public void addNewStudent(Student student) {
+   public void addNewStudent(Student student) {
         genericService.create(Student.class,student);
 }
 
@@ -68,21 +80,17 @@ public void addNewStudent(Student student) {
         genericService.delete(Student.class,id);
     }
     @Override
-    public void AddLesson(Long id, String lesson, Long professor) {
+    public void AddLesson(Long id, String lesson, Long professorId) {
 
         Student student = studentRepository.findById(id).orElseThrow(() -> new IllegalStateException(
                 "student with id " + id + "does not exist"
         ));
 
-        Lessons newLesson = lessonsRepository.findById(lesson).orElseThrow(() -> new IllegalStateException(
-                "Lesson " + lesson + "does not exist"
-        ));
+       Lessons newLesson= lessonService.lessonRequired(lesson);
 
-        Professers professoRequiredr = professorsRepository.findById(professor).orElseThrow(() -> new IllegalStateException(
-                "professor with id " + professor + "does not exist"
-        ));
+       Professers professor=professorsService.professorRequired(professorId);
 
-        if (!(student.getDepartment() == newLesson.getDepartment() && professoRequiredr.getprofessorLessons().contains(newLesson))) {
+        if (!(student.getDepartment() == newLesson.getDepartment() && professor.getprofessorLessons().contains(newLesson))) {
             throw new IllegalStateException("The professor is not for the lesson's department");
         } else {
             if (student.getLessons() != null) {
@@ -118,9 +126,7 @@ public void addNewStudent(Student student) {
         Student student = studentRepository.findById(id).orElseThrow(() -> new IllegalStateException(
                 "student with id " + id + "does not exist"
         ));
-        Department department = departmentRepository.findById(departmentName).orElseThrow(() -> new IllegalStateException(
-                "Department " + departmentName + "does not exists"
-        ));
+        Department department=departmentService.departmentRequired(departmentName);
 
         student.setDepartment(department);
         studentRepository.save(student);
@@ -130,24 +136,16 @@ public void addNewStudent(Student student) {
         Student student = studentRepository.findById(id).orElseThrow(() -> new IllegalStateException(
                 "student with id " + id + "does not exist"
         ));
-        Lessons lesson = lessonsRepository.findById(lessonName).orElseThrow(() -> new IllegalStateException(
-                "Lesson " + lessonName + "does not exist"
-        ));
+        Lessons lesson = lessonService.lessonRequired(lessonName);
 
         if (lesson.getStudents().contains(student)) {
             if (lesson.getGrades().stream().anyMatch(g -> g.getStudent().equals(student))) {
                 throw new IllegalStateException("Student already assigned a grade for lesson " + lessonName);
             }
 
-            Grade newGrade = new Grade();
-            newGrade.setLesson(lesson);
-            newGrade.setStudent(student);
-            newGrade.setGrade(grade);
-            //newGrade.setDepartmentOfGrade(lesson.getDepartment());
-            gradeRepository.save(newGrade);
+            Grade newGrade=gradeServices.addGradeToLessonOfStudent(lessonName,student,grade);
 
-            lesson.getGrades().add(newGrade);
-            lessonsRepository.save(lesson);
+            lessonService.addGradeOfLesson(lesson,newGrade);
         } else {
             throw new IllegalStateException("Student is not associated with lesson " + lessonName);
         }

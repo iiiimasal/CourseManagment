@@ -73,5 +73,17 @@ public class LessonService extends GenericService<Lessons,String> implements Les
         }
         return sum/lesson.getGrades().size();
     }
+    public Lessons lessonRequired(String lessonName){
+        Lessons lesson = lessonsRepository.findById(lessonName).orElseThrow(() -> new IllegalStateException(
+                "Lesson " + lessonName + "does not exist"
+        ));
+        return  lesson;
+    }
+    public void addGradeOfLesson(Lessons lesson,Grade newGrade){
+        lesson.getGrades().add(newGrade);
+        lessonsRepository.save(lesson);
+
+
+    }
 }
 

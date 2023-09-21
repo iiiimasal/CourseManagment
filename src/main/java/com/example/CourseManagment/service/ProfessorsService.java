@@ -106,6 +106,12 @@ public void CreateNewProfessor(Professers professer) {
                 department.setManager(professor);
                 departmentRepository.save(department);
     }
+    public  Professers professorRequired(Long id){
+        Professers professorRequired = professorsRepository.findById(id).orElseThrow(() -> new IllegalStateException(
+                "professor with id " + id + "does not exist"
+        ));
+        return professorRequired;
+    }
 }
 
 

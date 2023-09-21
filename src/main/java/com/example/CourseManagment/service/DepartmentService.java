@@ -68,4 +68,11 @@ public class DepartmentService  extends GenericService<Department,String> implem
          return avgOflesson / department.getStudentListTotal().size();
 
 }
+    public Department departmentRequired(String departmentName){
+        Department department = departmentRepository.findById(departmentName).orElseThrow(() -> new IllegalStateException(
+                "Department " + departmentName + "does not exists"
+        ));
+        return department;
+
+    }
 }

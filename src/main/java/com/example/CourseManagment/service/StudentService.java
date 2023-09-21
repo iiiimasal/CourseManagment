@@ -14,36 +14,25 @@ import java.util.Objects;
 @Service
 public   class StudentService extends  GenericService<Student,Long> implements StudentInterface {
     private   StudentRepository studentRepository;
-    private  LessonsRepository lessonsRepository;
     private LessonService lessonService;
-    private ProfessorsRepository professorsRepository;
     private ProfessorsService professorsService;
-    private DepartmentRepository departmentRepository;
     private  DepartmentService departmentService;
-    private GradeRepository gradeRepository;
     private GradeServices gradeServices;
     private final GenericService<Student, Long> genericService;
 
     @Autowired
     public StudentService(StudentRepository studentRepository,
-                          LessonsRepository lessonsRepository,
                           LessonService lessonService,
                           ProfessorsRepository professorsRepository,
                           ProfessorsService professorsService,
-                          DepartmentRepository departmentRepository,
-                          GradeRepository gradeRepository,
                           GradeServices gradeServices,
                          @Lazy GenericService <Student, Long> genericService,
                           DepartmentService departmentService
 
     ) {
         this.studentRepository = studentRepository;
-        this.lessonsRepository = lessonsRepository;
         this.lessonService=lessonService;
-        this.professorsRepository = professorsRepository;
         this.professorsService=professorsService;
-        this.departmentRepository = departmentRepository;
-        this.gradeRepository=gradeRepository;
         this.gradeServices=gradeServices;
         this.genericService=genericService;
         this.departmentService=departmentService;

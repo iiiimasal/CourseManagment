@@ -17,18 +17,18 @@ import java.util.List;
 @Service
 public class ProfessorsService extends GenericService<Professers,Long>  implements ProfessorInterface {
    private ProfessorsRepository professorsRepository;
-   private LessonsRepository lessonsRepository;
-   private DepartmentRepository departmentRepository;
+   private LessonService lessonService;
+   private DepartmentService departmentService;
    private final GenericService<Professers, Long> professorGeneric;
 
     @Autowired
     public ProfessorsService(ProfessorsRepository professorsRepository,
-                             LessonsRepository lessonsRepository,
-                             DepartmentRepository departmentRepository,
+                             LessonService lessonService,
+                             DepartmentService departmentService,
                           @Lazy GenericService<Professers, Long> professorGeneric) {
         this.professorsRepository = professorsRepository;
-        this.lessonsRepository = lessonsRepository;
-        this.departmentRepository = departmentRepository;
+        this.lessonService=lessonService;
+        this.departmentService=departmentService;
         this.professorGeneric=professorGeneric;
     }
     @Override
@@ -59,11 +59,7 @@ public void CreateNewProfessor(Professers professer) {
                 "professor with id "+professorId+"does not exist"
         ));
 
-
-
-        Lessons newLesson=lessonsRepository.findById(lesson).orElseThrow(()-> new IllegalStateException(
-                "Lesson "+lesson+"does not exist"
-        ));
+        Lessons newLesson=lessonService.lessonRequired(lesson);
 
             if (!(professor.getdepartmentOfprofessor()==newLesson.getDepartment())) {
                  throw new IllegalStateException("The lesson's department and professor does not match!");
@@ -80,12 +76,9 @@ public void CreateNewProfessor(Professers professer) {
         Professers professor=professorsRepository.findById(professorId).orElseThrow(()-> new IllegalStateException(
                 "professor with id "+professorId+"does not exist"
         ));
-
-        Department department=departmentRepository.findById(departmentName).orElseThrow(()-> new IllegalStateException(
-                "Department "+departmentName+"does not exists"
-        ));
-            professor.setdepartmentOfprofessor(department);
-            professorsRepository.save(professor);
+        Department department=departmentService.departmentRequired(departmentName);
+        professor.setdepartmentOfprofessor(department);
+        professorsRepository.save(professor);
 
     }
     @Override
@@ -95,16 +88,11 @@ public void CreateNewProfessor(Professers professer) {
                 "professor with id "+professorId+"does not exist"
         ));
 
-        Department department=departmentRepository.findById(departmentName).orElseThrow(()-> new IllegalStateException(
-                "Department "+departmentName+"does not exists"
-        ));
+        departmentService.chooseManger(departmentName,professor);
 
-            if (!professor.getdepartmentOfprofessor().equals(department)) {
-                throw new IllegalStateException("The professor mentioned is not in the required department");
-            }
 
-                department.setManager(professor);
-                departmentRepository.save(department);
+
+
     }
     public  Professers professorRequired(Long id){
         Professers professorRequired = professorsRepository.findById(id).orElseThrow(() -> new IllegalStateException(

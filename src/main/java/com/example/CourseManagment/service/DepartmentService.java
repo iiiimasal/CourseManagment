@@ -75,4 +75,13 @@ public class DepartmentService  extends GenericService<Department,String> implem
         return department;
 
     }
+    public void chooseManger(String departmentName, Professers professor){
+        Department department=departmentRequired(departmentName);
+        if (!professor.getdepartmentOfprofessor().equals(department)) {
+            throw new IllegalStateException("The professor mentioned is not in the required department");
+        }
+        department.setManager(professor);
+        departmentRepository.save(department);
+
+    }
 }

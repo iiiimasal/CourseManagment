@@ -13,11 +13,11 @@ import java.util.Objects;
 
 @Service
 public   class StudentService extends  GenericService<Student,Long> implements StudentInterface {
-    StudentRepository studentRepository;
-    LessonsRepository lessonsRepository;
-    ProfessorsRepository professorsRepository;
-    DepartmentRepository departmentRepository;
-    GradeRepository gradeRepository;
+    private   StudentRepository studentRepository;
+    private  LessonsRepository lessonsRepository;
+    private ProfessorsRepository professorsRepository;
+    private DepartmentRepository departmentRepository;
+    private GradeRepository gradeRepository;
     private final GenericService<Student, Long> genericService;
 
     @Autowired

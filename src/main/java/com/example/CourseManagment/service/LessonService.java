@@ -15,8 +15,8 @@ import java.util.List;
 @Service
 public class LessonService extends GenericService<Lessons,String> implements LessonInterface {
 
-    LessonsRepository lessonsRepository;
-    DepartmentRepository departmentRepository;
+    private final LessonsRepository lessonsRepository;
+   private  DepartmentRepository departmentRepository;
    private GenericService<Lessons, String>lessonGeneric;
     @Autowired
     LessonService(LessonsRepository lessonsRepository ,

@@ -16,10 +16,10 @@ import java.util.List;
 
 @Service
 public class ProfessorsService extends GenericService<Professers,Long>  implements ProfessorInterface {
-    ProfessorsRepository professorsRepository;
-    LessonsRepository lessonsRepository;
-    DepartmentRepository departmentRepository;
-    private final GenericService<Professers, Long> professorGeneric;
+   private ProfessorsRepository professorsRepository;
+   private LessonsRepository lessonsRepository;
+   private DepartmentRepository departmentRepository;
+   private final GenericService<Professers, Long> professorGeneric;
 
     @Autowired
     public ProfessorsService(ProfessorsRepository professorsRepository,

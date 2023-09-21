@@ -16,17 +16,16 @@ import java.util.List;
 
 @Service
 public class DepartmentService  extends GenericService<Department,String> implements DepartmentInterface {
-    DepartmentRepository departmentRepository;
-    ProfessorsRepository professorsRepository;
+   private final DepartmentRepository departmentRepository;
+//    private final ProfessorsRepository professorsRepository;
 //    GradeRepository gradeRepository;
     private GenericService<Department,String>departmentGeneric;
     @Autowired
-    public DepartmentService(DepartmentRepository departmentRepository  ,
-                             ProfessorsRepository professorsRepository,
+    public DepartmentService(DepartmentRepository departmentRepository ,
                              @Lazy GenericService<Department,String>departmentGeneric
                              ) {
         this.departmentRepository = departmentRepository;
-        this.professorsRepository=professorsRepository;
+       // this.professorsRepository=professorsRepository;
         this.departmentGeneric=departmentGeneric;
         //this.gradeRepository=gradeRepository;
     }
